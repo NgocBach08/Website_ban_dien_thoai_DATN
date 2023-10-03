@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/weblayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý nhập hàng - World Phone</title>
+    <link rel="stylesheet" th:href="@{/assets/css/select2.min.css}">
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid" style="max-width: 98%; height: 80vh">
+    <div class="row container1">
+        <div class="col-lg-2 h-100" id="leftKH">
+            <h1 class="heading-page">Quản lý nhập hàng</h1>
+            <div class="filter-report">
+                <div class="card" style="padding-left: 15px; padding-top: 15px">
+                    <h6 class="mx-2 mt-2 fs-14">Lọc theo:</h6>
+                    <div class="mx-2 mb-2">
+                        <div class="mb-3">
+                            <label>Nhà cung cấp:</label>
+                            <select class="select2 form-select" onchange="onChangeFilerSupplier(this)">
+                                <option value="">Tất cả</option>
+                                <option th:each="supplie : ${lstSupplier}" th:value="${supplie.id}"
+                                        th:text="${supplie.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10" id="rightKH" style="height: 100%">
+            <div class="row justify-content-end">
+                <a href="#modal-add-invoice" type="button"
+                   class="btn btn-primary col-auto mb-3 waves-effect waves-light"
+                   data-bs-toggle="modal" >
+                    <i class="fas fa-plus me-2"></i>
+                    Nhập hàng
+                </a>
+            </div>
+            <div class="card">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-body overflow-auto">
+                            <table id="datatable"
+                                   class="table table-responsive table-hover table-bordered nowrap dataTable no-footer shadow"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>STT</th>
+                                    <th>Chức năng</th>
+                                    <th>NCC</th>
+                                    <th>Mã phiếu nhập</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Giảm giá</th>
+                                    <th>Phải trả NCC</th>
+                                    <th>Tiền thừa</th>
+                                    <th>Người nhận</th>
+                                    <th>Ngày nhập</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="invoice, iterator : ${lstInvoiceOrder}"
+                                    th:if="${invoice.getTotalMoneny() > 0}">
+                                    <td><span th:text="${iterator.index + 1}"></span></td>
+                                    <td class="text-center">
+                                        <a href="#modal-edit-invoice" class="btn btn-info btn-sm"
+                                           th:data-id="${invoice.id}"
+                                           data-bs-toggle="modal" onclick="onClickEditInvoice(this)">
+                                            Chi tiết
+                                        </a>
+                                    </td>
+                                    <td class="ncc"
+                                        th:text="${invoice.supplierName}">NCC
+                                    </td>
+                                    <td th:text="${invoice.codeOrder}">Mã phiếu nhập</td>
+                                    <td class="text-end"
+                                        th:text="${invoice.getTotalMonenyString()}">
+                                        Tổng tiền
+                                    </td>
+                                    <td class="text-end"
+                                        th:text="${invoice.giamGiaString}">
+                                        Giảm giá
+                                    </td>
+
+                                    <td class="text-end"
+                                        th:text="${invoice.phaiTraNCCString}">
+                                        Phải trả NCC
+                                    </td>
+                                    <td th:text="${invoice.tienThuaString}">
+                                        Phải trả NCC
+                                    </td>
+                                    <td th:text="${invoice.staffName}">
+                                        Phải trả NCC
+                                    </td>
+                                    <td class="dateInvoice"
+                                        th:text="${invoice.receiveDate}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <div id="morris-bar-stacked" class="morris-chart-height morris-charts"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-add-invoice" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="titleModal1">Thêm hóa đơn nhập hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="addInvoice">
+                    <div class="row">
+                        <div class="col-lg-3">
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-order-code">
+                                        Mã đặt hàng
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <select id="ip-add-order-code" class="form-control select2"
+                                            onchange="onChangeInvoiceOrderEdit(this)" style="width: 100%">
+                                        <option value="0">Chưa đặt</option>
+                                        <option th:each="invoiceOrder : ${lstInvoiceOrder}"
+                                                th:if="${invoiceOrder.getStatus() == 1}"
+                                                th:value="${invoiceOrder.id}"
+                                                th:text="${invoiceOrder.getCodeOrder()}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-supplier">
+                                        Nhà cung cấp
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <select id="ip-add-supplier" class="form-control select2" style="width: 100%">
+                                        <option th:each="supplier : ${lstSupplier}"
+                                                th:value="${supplier.id}"
+                                                th:text="${supplier.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-invoice-discount">
+                                        Giảm giá
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-add-invoice-discount"
+                                           placeholder="Số tiền NCC giảm...." class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-invoice-paid">
+                                        Đã trả NCC
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-add-invoice-paid"
+                                           placeholder="Số tiền trả NCC...." class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-thua">
+                                        Tiền thừa
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-add-thua"
+                                           placeholder="Số tiền thừa...." class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-add-invoice-note">
+                                        Ghi chú
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="text" id="ip-add-invoice-note" placeholder="Ghi chú...."
+                                           class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
+                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th>Sản phẩm</th>
+                                        <th>Chức năng</th>
+                                        <th>Màu sắc</th>
+                                        <th>Bộ nhớ trong</th>
+                                        <th>Số lượng nhập</th>
+                                        <th>Giá tiền nhập sản phẩm</th>
+                                        <th>Ghi chú chi tiết</th>
+                                        <th>Trạng thái sản phẩm</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="bodyAddProduct">
+                                    <tr id="rowMain" class="add-product1" style="display: none;">
+                                        <td class="add-product1-name" >Tên sản phẩm</td>
+                                        <td class="add-product1-active">
+                                            <a onclick="delete_row1(this)" href="#" class="btn btn-danger btn-sm waves-effect waves-light">Xóa</a>
+                                        </td>
+                                        <td class="add-product1-color">
+                                           <label></label>
+                                            <label hidden></label>
+                                        </td>
+                                        <td class="add-product1-rom">
+                                            <label></label>
+                                            <label hidden></label>
+                                        </td>
+                                        <td class="add-product1-sl">
+                                            <input type="number"  min="0"
+                                                   placeholder="sl nhập...." class="form-control"/>
+                                        </td>
+                                        <td class="add-product1-tien">
+                                            <input type="number"  min="0"
+                                                   placeholder="Giá tiền...." class="form-control"/>
+                                        </td>
+                                        <td class="add-product1-ghi-chu">
+                                            <input type="text"
+                                                   placeholder="Ghi chú...." class="form-control"/>
+                                        </td>
+
+                                        <td class="add-product1-trang-thai">
+                                            <select   class="form-control">
+                                                <option  value="1">Đang nhập</option>
+                                                <option  value="2">Đã nhập</option>
+                                                <option value="3">NCC hết hàng</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-secondary" id="btnAddProduct" onclick="$('.modal-add-product').modal('show');">
+                                    Thêm sản phẩm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Đóng</button>
+
+                    <button type="button" id="btnSubmitAddInvoice" class="btn btn-success waves-effect waves-light"
+                            onclick="onClickAddInvoice()">
+                        Lưu
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="modal-edit-invoice" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="titleModal">Sửa nhập hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="editInvoice">
+                    <div class="row">
+                        <div class="col-lg-3">
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label>
+                                        Mã đặt hàng
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <label id="ip-edit-order-code">
+                                        aaaa
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-edit-supplier">
+                                        Nhà cung cấp
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <select id="ip-edit-supplier" class="form-control select2" style="width: 100%">
+                                        <option th:each="supplier : ${lstSupplier}"
+                                                th:value="${supplier.id}"
+                                                th:text="${supplier.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-edit-invoice-discount">
+                                        Giảm giá
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-edit-invoice-discount"
+                                           placeholder="Số tiền NCC giảm...." class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-edit-invoice-paid">
+                                        Đã trả NCC
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-edit-invoice-paid"
+                                           placeholder="Số tiền trả NCC...." class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-edit-thua">
+                                        Tiền thừa
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="number"  min="0" id="ip-edit-thua"
+                                           placeholder="Số tiền thừa...." class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-lg-5">
+                                    <label for="ip-edit-invoice-note">
+                                        Ghi chú
+                                    </label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="text" id="ip-edit-invoice-note" placeholder="Ghi chú...."
+                                           class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
+                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th>Sản phẩm</th>
+                                        <th>Chức năng</th>
+                                        <th>Màu sắc</th>
+                                        <th>Bộ nhớ trong</th>
+                                        <th>Số lượng nhập</th>
+                                        <th>Giá tiền nhập sản phẩm</th>
+                                        <th>Ghi chú chi tiết</th>
+                                        <th>Trạng thái sản phẩm</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="bodyEditProduct">
+                                    <tr id="rowMain1" class="edit-product1" style="display: none;">
+                                        <td class="edit-product1-name" >Tên sản phẩm</td>
+                                        <td class="edit-product1-active">
+                                            <a onclick="delete_row1(this)" href="#" class="btn btn-danger btn-sm waves-effect waves-light">Xóa</a>
+                                        </td>
+                                        <td class="edit-product1-color">
+                                            <label></label>
+                                            <label hidden></label>
+                                        </td>
+                                        <td class="edit-product1-rom">
+                                            <label></label>
+                                            <label hidden></label>
+                                        </td>
+                                        <td class="edit-product1-sl">
+                                            <input type="number"  min="0"
+                                                   placeholder="sl nhập...." class="form-control"/>
+                                        </td>
+                                        <td class="edit-product1-tien">
+                                            <input type="number"  min="0"
+                                                   placeholder="Giá tiền...." class="form-control"/>
+                                        </td>
+                                        <td class="edit-product1-ghi-chu">
+                                            <input type="text"
+                                                   placeholder="Ghi chú...." class="form-control"/>
+                                        </td>
+
+                                        <td class="edit-product1-trang-thai">
+                                            <select   class="form-control">
+                                                <option  value="1">Đang nhập</option>
+                                                <option  value="2">Đã nhập</option>
+                                                <option value="3">NCC hết hàng</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-secondary"  onclick="$('.modal-add-product').modal('show');">
+                                    Thêm sản phẩm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" id="btnSubmitEditInvoice" class="btn btn-success waves-effect waves-light"
+                            data-id="" onclick="onClickSubmitEditInvoice(this)">
+                        Cập nhật
+                    </button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade modal-add-product" tabindex="-1" style="display: none; background-color: rgb(56 55 76 / 86%);" aria-hidden="true">
+        <div class="modal-dialog modal-xl" style="margin-top: 5%;">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Thêm sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body-->
+                <div class="modal-body px-4 overflow-auto">
+                    <input type="text" class="form-control mb-3 text-center" id="add-product_input" placeholder="Tìm kiếm theo mã/tên sản phẩm" onblur="onType(this)">
+                    <table class="table table-striped table-bordered table-hover table-condensed align-middle">
+                        <thead class="align-middle text-center" style="background: lightgrey;">
+                        <th style="width: 50px;">STT</th>
+                        <th>Ảnh sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Bộ nhớ trong</th>
+                        <th>Màu sắc</th>
+                        </thead>
+                        <tbody id="list-product">
+                        <tr class="add-product" style="display: none;">
+                            <td class="add-product-index text-center" style="width: 50px;">STT</td>
+                            <td class="text-center">
+                                <img src="" alt="product-img" class="add-product-image border rounded" style="max-height: 50px; max-width: 105px;">
+                            </td>
+                            <td class="add-product-name">Tên sản phẩm</td>
+                            <td class="add-product-rom"></td>
+                            <td class="add-product-color">
+                                <select class="form-control">
+                                    <th:block th:each="color : ${listColor}">
+                                        <option th:value="${color.id}" th:text="${color.getName()}"></option>
+                                    </th:block>
+                                </select>
+                            </td>
+                            <td style="border: none;">
+                                <button class="btn btn-primary waves-effect waves-light" onclick="onAddProduct(this)"><i class="fas fa-plus"></i></button>
+                            </td>
+                            <input type="hidden" class="add-product-id">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success waves-effect waves-light" data-bs-dismiss="modal">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <select hidden id="rom" class="form-control">
+        <option hidden id="data" value="0"> 0 </option>
+    </select>
+
+
+
+
+
+
+    <script>
+        function onChangeFilerSupplier(e) {
+            let value = e.value;
+            if (value === '') {
+                $('.ncc').parent().show();
+            } else {
+                $('.ncc').parent().hide();
+                $('.ncc[data-id="' + value + '"]').parent().show();
+            }
+        }
+
+        function onChangeFilterDate(e) {
+            let value = e.value;
+            $('.dateInvoice').parent().hide();
+            $('.dateInvoice[data-date="' + value + '"]').parent().show();
+        }
+
+        $('.modal-add-product').on('keypress', function(e) {
+            if(e.which === 13) {
+                const keyword = $('#add-product_input').val();
+                if (keyword !== null && keyword !== '') {
+                    $('#add-product_input').removeClass('error');
+                    onSearchAddProduct(keyword);
+                } else {
+                    $('#add-product_input').addClass('error');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Hãy nhập từ khoá tìm kiếm!'
+                    })
+                }
+            }
+        });
+        // Event hide Modal Add product
+        $('.modal-add-product').on('hide.bs.modal', function () {
+            $('#add-product_input').removeClass('error').val('');
+            $('.add-product:not(:first)').remove();
+        })
+
+        function onSearchAddProduct(keyword) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'info',
+                title: 'Đang tìm kiếm!'
+            })
+            $('.add-product:not(:first)').remove();
+            $.ajax({
+                url: `/api/product/search1/${keyword}`,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (res) {
+                    console.log(res);
+                    if (res !== null && res.length > 0) {
+                        Toast.fire({
+                            icon: 'info',
+                            title: `Đã tìm thấy ${res.length} sản phẩm!`
+                        })
+                        const  rom = document.getElementById("rom");
+                        for (let i = 0; i < res.length; i++) {
+                            let d = rom.cloneNode(true);
+                            d.removeAttribute("id");
+                            d.removeAttribute("hidden")
+                            while (d.lastElementChild) {
+                                d.removeChild(d.lastElementChild);
+                            }
+                            // Clone row product of order for table
+                            $('.add-product').eq(0).clone().appendTo('#list-product');
+
+                            // Get row
+                            const product = $('#list-product').find('.add-product').eq(i + 1).show();
+
+                            let  b = document.getElementById("data");
+                            for (let j = 0; j < res[i].romRespones.length; j++) {
+                                let c = b.cloneNode(true);
+                                c.value = res[i].romRespones[j].id;
+                                c.innerText = res[i].romRespones[j].name;
+                                c.removeAttribute("id");
+                                c.removeAttribute("hidden");
+                                d.appendChild(c);
+                            }
+                            product.find('.add-product-image').attr('src', res[i].imageProduct);
+                            product.find('.add-product-name').text(res[i].nameProduct);
+                            product.find('.add-product-rom').append(d);
+                        }
+                        // Reset index list product of order
+                        $('.add-product-index:not(:eq(0))').each(function(index){$(this).text(index + 1)});
+                    } else {
+                        Toast.fire({
+                            icon: 'info',
+                            title: `Không tìm thấy sản phẩm<br>phù hợp!`
+                        })
+                    }
+                },
+                error: function (err) {
+                    Toast.fire({
+                        icon: 'info',
+                        title: `Không tìm thấy sản phẩm<br>phù hợp!`
+                    })
+                }
+            })
+        }
+
+        function onAddProduct(tag) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            const table = document.getElementById("bodyAddProduct");
+            const tr = tag.parentNode.parentNode;
+            const rowChinh = document.getElementById("rowMain").cloneNode(true);
+            console.log(rowChinh)
+            const  e = tr.childNodes[7].childNodes[0];
+            const  d = tr.childNodes[9].childNodes[1];
+            rowChinh.childNodes[1].textContent = tr.childNodes[5].textContent;
+            rowChinh.childNodes[7].childNodes[1].textContent = e.options[e.selectedIndex].text
+            rowChinh.childNodes[7].childNodes[3].textContent = e.options[e.selectedIndex].value
+            rowChinh.childNodes[5].childNodes[1].textContent = d.options[d.selectedIndex].text
+            rowChinh.childNodes[5].childNodes[3].textContent = d.options[d.selectedIndex].value
+            rowChinh.removeAttribute("id");
+            rowChinh.removeAttribute("style");
+            console.log(rowChinh)
+            table.appendChild(rowChinh);
+            rowChinh.childNodes[1].textContent = tr.childNodes[5].textContent
+
+            const tableEdit = document.getElementById("bodyEditProduct");
+            const rowChinhEdit = document.getElementById("rowMain1").cloneNode(true);
+
+            rowChinhEdit.childNodes[1].textContent = tr.childNodes[5].textContent;
+            rowChinhEdit.childNodes[7].childNodes[1].textContent = e.options[e.selectedIndex].text
+            rowChinhEdit.childNodes[7].childNodes[3].textContent = e.options[e.selectedIndex].value
+            rowChinhEdit.childNodes[5].childNodes[1].textContent = d.options[d.selectedIndex].text
+            rowChinhEdit.childNodes[5].childNodes[3].textContent = d.options[d.selectedIndex].value
+            rowChinhEdit.removeAttribute("id");
+            rowChinhEdit.removeAttribute("style");
+            tableEdit.appendChild(rowChinhEdit);
+            rowChinhEdit.childNodes[1].textContent = tr.childNodes[5].textContent
+            Toast.fire({
+                icon: 'success',
+                title: `Thêm thành công sản phẩm<br>` + tr.childNodes[5].textContent
+            })
+        }
+
+        function delete_row1(e) {
+            e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+        }
+    </script>
+</div>
+<div layout:fragment="script">
+    <script th:src="@{/assets/js/invoice_008.js}"></script>
+    <script th:src="@{/assets/js/table-edits.min.js}"></script>
+    <script th:src="@{/assets/js/spectrum.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap-maxlength.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.bootstrap-touchspin.min.js}"></script>
+    <script th:src="@{/assets/js/select2.min.js}"></script>
+    <script th:src="@{/assets/js/form-advanced.init.js}"></script>
+    <!--    <script th:src="@{/assets/js/table-editable.init.js}"></script>-->
+</div>
+</body>
+</html>

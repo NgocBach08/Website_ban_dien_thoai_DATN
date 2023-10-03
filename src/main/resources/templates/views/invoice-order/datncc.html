@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/weblayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt hàng NCC - World Phone</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/select2.min.css}">
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid" style="max-width: 98%">
+    <div class="row container1">
+        <div class="col-lg-2 h-100" id="leftKH">
+            <h1 class="heading-page">Đặt hàng NCC</h1>
+            <div class="filter-report">
+<!--                <div class="card" style="padding-left: 15px; padding-top: 15px">-->
+<!--                    <h6 class="mx-2 mt-2 fs-14">Trạng thái</h6>-->
+<!--                    <div class="mx-2 mb-2">-->
+<!--                        <div class="form-group form-check">-->
+<!--                            <input class="form-check-input" type="radio" name="status" id="statusAll" value="Tất cả"-->
+<!--                                   onchange="onStatusChange(this)" checked>-->
+<!--                            <label class="form-check-label" for="statusAll">-->
+<!--                                Tất cả-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <div class="form-group form-check">-->
+<!--                            <input class="form-check-input" type="radio" name="status" id="statusActive"-->
+<!--                                   value="Đã đặt" onchange="onStatusChange(this)">-->
+<!--                            <label class="form-check-label" for="statusActive">-->
+<!--                                Đã đặt-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <div class="form-group form-check">-->
+<!--                            <input class="form-check-input" type="radio" name="status" id="statusActiveNhan"-->
+<!--                                   value="Đã huỷ" onchange="onStatusChange(this)">-->
+<!--                            <label class="form-check-label" for="statusActiveNhan">-->
+<!--                                Đã nhận-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <div class="form-group form-check">-->
+<!--                            <input class="form-check-input" type="radio" name="status" id="statusInActive1"-->
+<!--                                   value="Đợi duyệt" onchange="onStatusChange(this)">-->
+<!--                            <label class="form-check-label" for="statusInActive1">-->
+<!--                                Đợi duyệt-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <div class="form-group form-check">-->
+<!--                            <input class="form-check-input" type="radio" name="status" id="statusInActive"-->
+<!--                                   value="Giao chưa đủ" onchange="onStatusChange(this)">-->
+<!--                            <label class="form-check-label" for="statusInActive">-->
+<!--                                Giao chưa đủ-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+        <div class="col-lg-10" id="rightKH" style="height: 100%">
+            <div class="row justify-content-end">
+                <a href="#modalAddOrderInvoice" type="button"
+                   class="btn btn-primary col-auto mb-3 waves-effect waves-light"
+                   data-bs-toggle="modal">
+                    <i class="fas fa-plus me-2"></i>
+                    Đặt NCC
+                </a>
+            </div>
+            <div class="card">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-body overflow-auto">
+                            <table id="datatable"
+                                   class="table table-responsive table-hover table-bordered nowrap dataTable no-footer shadow"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>STT</th>
+                                    <th>Chức năng</th>
+                                    <th>Mã đặt hàng</th>
+                                    <th>NCC</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Hẹn nhập</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="orderInvoice : ${lstInvoiceOrder}" class="text-center">
+                                    <td></td>
+                                    <td class="text-center">
+                                        <button th:if="${orderInvoice.status != 2 && orderInvoice.status != 0 && orderInvoice.status != 3}" class="btn btn-danger btn-sm"
+                                                th:data-id="${orderInvoice.id}"
+                                                onclick="onClickCancelOrderInvoice(this)">
+                                            Huỷ
+                                        </button>
+                                        <a th:if="${orderInvoice.status != 2 && orderInvoice.status != 3}"
+                                           href="#modalEditOrderInvoice" class="btn btn-info btn-sm"
+                                           th:data-id="${orderInvoice.id}"
+                                           data-bs-toggle="modal" onclick="onClickEditOrderInvoice(this)">
+                                            Chi tiết
+                                        </a>
+                                        <a th:if="${orderInvoice.status == 2 || orderInvoice.status == 3}"
+                                           href="/invoice" class="btn btn-info btn-sm">
+                                            Chi tiết
+                                        </a>
+
+                                    </td>
+                                    <td th:text="${orderInvoice.codeOrder}">Mã đặt hàng</td>
+                                    <td th:text="${orderInvoice.supplierName}">NCC</td>
+                                    <td th:text="${orderInvoice.createDate}"></td>
+                                    <td th:text="${orderInvoice.receiveDate}"></td>
+                                    <td>
+                                        <span th:if="${orderInvoice.status == 1}"
+                                              class="badge bg-success">Đã đặt</span>
+                                        <span th:if="${orderInvoice.status == 0}"
+                                              class="badge bg-danger">Đã huỷ</span>
+                                        <span th:if="${orderInvoice.status == 2}"
+                                              class="badge bg-purple">Đã nhận</span>
+                                        <span th:if="${orderInvoice.status == -1}"
+                                              class="badge bg-orange">Đợi duyệt</span>
+                                        <span th:if="${orderInvoice.status == 3}"
+                                              class="badge bg-brown">Giao chưa đủ</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <div id="morris-bar-stacked" class="morris-chart-height morris-charts"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAddOrderInvoice" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Thêm đặt hàng NCC</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-lg-2">
+                        <div class="mb-3">
+                            <label for="ip-order-invoice-code">
+                                Mã đặt hàng:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="ip-order-invoice-code" placeholder="Mã đặt hàng...."
+                                   class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-order-invoice-date">
+                                Hẹn ngày nhận:
+                            </label>
+                        </div>
+                        <div class="mb-3 input-group" id="datepicker2">
+                            <input type="text" class="form-control" placeholder="dd-MM-yyyy"
+                                   data-date-format="dd-mm-yyyy" id="ip-order-invoice-date"
+                                   data-date-container='#datepicker2'
+                                   data-provide="datepicker"
+                                   data-date-autoclose="true"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-order-invoice-supplier">
+                                Nhà cung cấp:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <select id="ip-order-invoice-supplier" class="form-control select2">
+                                <option th:each="supplier : ${lstSupplier}"
+                                        th:value="${supplier.id}"
+                                        th:text="${supplier.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-order-invoice-note">
+                                Ghi chú:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <textarea rows="5" placeholder="Ghi chú...." class="form-control"
+                                      id="ip-order-invoice-note"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
+                            <table class="table">
+                                <thead>
+                                <tr class="text-center" style="overflow-y: auto">
+                                    <th colspan="1" class="border-1">Sản phẩm</th>
+                                    <th colspan="1" class="border-1">Chức năng</th>
+                                    <th colspan="1" class="border-1">Màu</th>
+                                    <th colspan="1" class="border-1">Bộ nhớ trong</th>
+                                    <th colspan="1" class="border-1">Số lượng đặt</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bodyAddProductOrderInvoice">
+                                <tr id="rowMain" class="add-product1" style="display: none;">
+                                    <td class="add-product1-name">Tên sản phẩm</td>
+                                    <td class="add-product1-active">
+                                        <a onclick="delete_row1(this)" href="#"
+                                           class="btn btn-danger btn-sm waves-effect waves-light">Xóa</a>
+                                    </td>
+                                    <td class="add-product1-color">
+                                        <label></label>
+                                        <label hidden></label>
+                                    </td>
+                                    <td class="add-product1-rom">
+                                        <label></label>
+                                        <label hidden></label>
+                                    </td>
+                                    <td class="add-product1-sl">
+                                        <input type="number" min="0"
+                                               placeholder="số lượng nhập...." class="form-control"/>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary"
+                                    onclick="$('.modal-add-product').modal('show');">
+                                Thêm sản phẩm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-success waves-effect waves-light"
+                            onclick="onClickSubmitAddOrderInvoice1(1)">
+                        Lưu
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+    <div id="modalEditOrderInvoice" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Sửa đặt hàng NCC</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-lg-2">
+                        <div class="mb-3">
+                            <label for="ip-edit-order-invoice-code">
+                                Mã đặt hàng:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" disabled id="ip-edit-order-invoice-code" placeholder="Mã đặt hàng...."
+                                   class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-edit-order-invoice-date">
+                                Hẹn ngày nhận:
+                            </label>
+                        </div>
+                        <div class="mb-3 input-group" id="datepicker3">
+                            <input type="text" class="form-control" placeholder="dd-MM-yyyy"
+                                   data-date-format="dd-mm-yyyy" id="ip-edit-order-invoice-date"
+                                   data-date-container='#datepicker3'
+                                   data-provide="datepicker"
+                                   data-date-autoclose="true"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-edit-order-invoice-supplier">
+                                Nhà cung cấp:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <select id="ip-edit-order-invoice-supplier" class="form-control select2">
+                                <option th:each="supplier : ${lstSupplier}"
+                                        th:value="${supplier.id}"
+                                        th:text="${supplier.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ip-edit-order-invoice-note">
+                                Ghi chú:
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <textarea rows="5" placeholder="Ghi chú...." class="form-control"
+                                      id="ip-edit-order-invoice-note"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="d-flex flex-column-reverse">
+                            <input onkeyup="searchUser(this)" class="form-control-sm" type="text"
+                                   placeholder="Nhập tên sản phẩm tìm kiếm"/>
+                        </div>
+                        <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
+                            <table class="table">
+                                <thead>
+                                <tr class="text-center" style="overflow-y: auto">
+                                    <th colspan="1" class="border-1">Sản phẩm</th>
+                                    <th colspan="1" class="border-1">Chức năng</th>
+                                    <th colspan="1" class="border-1">Màu</th>
+                                    <th colspan="1" class="border-1">Bộ nhớ trong</th>
+                                    <th colspan="1" class="border-1">Số lượng đặt</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bodyEditProductOrderInvoice">
+                                <tr id="rowMain1" class="edit-product1" style="display: none;">
+                                    <td class="edit-product1-name">Tên sản phẩm</td>
+                                    <td class="edit-product1-active">
+                                        <a onclick="delete_row1(this)" href="#"
+                                           class="btn btn-danger btn-sm waves-effect waves-light">Xóa</a>
+                                    </td>
+                                    <td class="edit-product1-color">
+                                        <label></label>
+                                        <label hidden></label>
+                                    </td>
+                                    <td class="edit-product1-rom">
+                                        <label></label>
+                                        <label hidden></label>
+                                    </td>
+                                    <td class="edit-product1-sl">
+                                        <input type="number" min="0"
+                                               placeholder="sl nhập...." class="form-control"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary"
+                                    onclick="$('.modal-add-product').modal('show');">
+                                Thêm sản phẩm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnSubmitEditInvoice"
+                            data-id="" onclick="onClickSubmitEditOrderInvoice(this)">
+                        Cập nhật
+                    </button>
+
+                    <button type="button" class="btn btn-brown waves-effect waves-light" id="btnDuyet"
+                            data-id="" onclick="duyet(this)">
+                        Duyệt đơn hàng
+                    </button>
+
+                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnSubmitReverseCancel"
+                            data-id="" onclick="onClickCancelOrderInvoice(this)">
+                        Đặt lại
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade modal-add-product" tabindex="-1"
+         style="display: none; background-color: rgb(56 55 76 / 86%);" aria-hidden="true">
+        <div class="modal-dialog modal-xl" style="margin-top: 5%;">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Thêm sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body-->
+                <div class="modal-body px-4 overflow-auto">
+                    <input type="text" class="form-control mb-3 text-center" id="add-product_input"
+                           placeholder="Tìm kiếm theo mã/tên sản phẩm" onblur="onType(this)">
+                    <table class="table table-striped table-bordered table-hover table-condensed align-middle">
+                        <thead class="align-middle text-center" style="background: lightgrey;">
+                        <th style="width: 50px;">STT</th>
+                        <th>Ảnh sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Bộ nhớ trong</th>
+                        <th>Màu sắc</th>
+                        </thead>
+                        <tbody id="list-product">
+                        <tr class="add-product" style="display: none;">
+                            <td class="add-product-index text-center" style="width: 50px;">STT</td>
+                            <td class="text-center">
+                                <img src="" alt="product-img" class="add-product-image border rounded"
+                                     style="max-height: 50px; max-width: 105px;">
+                            </td>
+                            <td class="add-product-name">Tên sản phẩm</td>
+                            <td class="add-product-rom"></td>
+                            <td class="add-product-color">
+                                <select class="form-control">
+                                    <th:block th:each="color : ${listColor}">
+                                        <option th:value="${color.id}" th:text="${color.getName()}"></option>
+                                    </th:block>
+                                </select>
+                            </td>
+                            <td style="border: none;">
+                                <button class="btn btn-primary waves-effect waves-light" onclick="onAddProduct(this)"><i
+                                        class="fas fa-plus"></i></button>
+                            </td>
+                            <input type="hidden" class="add-product-id">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success waves-effect waves-light" data-bs-dismiss="modal">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <select hidden id="rom" class="form-control">
+        <option hidden id="data" value="0"> 0</option>
+    </select>
+
+</div>
+<div layout:fragment="script">
+    <script th:src="@{/assets/js/order_invoice_014.js}"></script>
+    <script th:src="@{/assets/js/spectrum.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap-maxlength.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.bootstrap-touchspin.min.js}"></script>
+    <script th:src="@{/assets/js/select2.min.js}"></script>
+    <script th:src="@{/assets/js/form-advanced.init.js}"></script>
+    <script>
+        function onStatusChange(element) {
+            const value = $(element).val();
+            const tagAll = $('#datatable tbody tr');
+            const tag = $('tbody tr td span').filter(function () {
+                return $(this).text().includes(value);
+            });
+            if (value === '') {
+                tagAll.show();
+            } else {
+                tagAll.hide();
+                tag.parent().parent().show();
+            }
+        }
+
+
+        function onAddProduct(tag) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            const table = document.getElementById("bodyAddProductOrderInvoice");
+            const tr = tag.parentNode.parentNode;
+            const rowChinh = document.getElementById("rowMain").cloneNode(true);
+            console.log(rowChinh)
+            const e = tr.childNodes[7].childNodes[0];
+            const d = tr.childNodes[9].childNodes[1];
+            rowChinh.childNodes[1].textContent = tr.childNodes[5].textContent;
+            rowChinh.childNodes[7].childNodes[1].textContent = e.options[e.selectedIndex].text
+            rowChinh.childNodes[7].childNodes[3].textContent = e.options[e.selectedIndex].value
+            rowChinh.childNodes[5].childNodes[1].textContent = d.options[d.selectedIndex].text
+            rowChinh.childNodes[5].childNodes[3].textContent = d.options[d.selectedIndex].value
+            rowChinh.removeAttribute("id");
+            rowChinh.removeAttribute("style");
+            console.log(rowChinh)
+            table.appendChild(rowChinh);
+            rowChinh.childNodes[1].textContent = tr.childNodes[5].textContent
+
+            const tableEdit = document.getElementById("bodyEditProductOrderInvoice");
+            const rowChinhEdit = document.getElementById("rowMain1").cloneNode(true);
+
+            rowChinhEdit.childNodes[1].textContent = tr.childNodes[5].textContent;
+            rowChinhEdit.childNodes[7].childNodes[1].textContent = e.options[e.selectedIndex].text
+            rowChinhEdit.childNodes[7].childNodes[3].textContent = e.options[e.selectedIndex].value
+            rowChinhEdit.childNodes[5].childNodes[1].textContent = d.options[d.selectedIndex].text
+            rowChinhEdit.childNodes[5].childNodes[3].textContent = d.options[d.selectedIndex].value
+            rowChinhEdit.removeAttribute("id");
+            rowChinhEdit.removeAttribute("style");
+            tableEdit.appendChild(rowChinhEdit);
+            rowChinhEdit.childNodes[1].textContent = tr.childNodes[5].textContent
+            Toast.fire({
+                icon: 'success',
+                title: `Thêm thành công sản phẩm<br>` + tr.childNodes[5].textContent
+            })
+        }
+
+        $('.modal-add-product').on('keypress', function (e) {
+            if (e.which === 13) {
+                const keyword = $('#add-product_input').val();
+                if (keyword !== null && keyword !== '') {
+                    $('#add-product_input').removeClass('error');
+                    onSearchAddProduct(keyword);
+                } else {
+                    $('#add-product_input').addClass('error');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Hãy nhập từ khoá tìm kiếm!'
+                    })
+                }
+            }
+        });
+        // Event hide Modal Add product
+        $('.modal-add-product').on('hide.bs.modal', function () {
+            $('#add-product_input').removeClass('error').val('');
+            $('.add-product:not(:first)').remove();
+        })
+
+        function delete_row1(e) {
+            e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+        }
+
+        function onSearchAddProduct(keyword) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'info',
+                title: 'Đang tìm kiếm!'
+            })
+            $('.add-product:not(:first)').remove();
+            $.ajax({
+                url: `/api/product/search1/${keyword}`,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (res) {
+                    console.log(res);
+                    if (res !== null && res.length > 0) {
+                        Toast.fire({
+                            icon: 'info',
+                            title: `Đã tìm thấy ${res.length} sản phẩm!`
+                        })
+                        const rom = document.getElementById("rom");
+                        for (let i = 0; i < res.length; i++) {
+                            let d = rom.cloneNode(true);
+                            d.removeAttribute("id");
+                            d.removeAttribute("hidden")
+                            while (d.lastElementChild) {
+                                d.removeChild(d.lastElementChild);
+                            }
+                            // Clone row product of order for table
+                            $('.add-product').eq(0).clone().appendTo('#list-product');
+
+                            // Get row
+                            const product = $('#list-product').find('.add-product').eq(i + 1).show();
+
+                            let b = document.getElementById("data");
+                            for (let j = 0; j < res[i].romRespones.length; j++) {
+                                let c = b.cloneNode(true);
+                                c.value = res[i].romRespones[j].id;
+                                c.innerText = res[i].romRespones[j].name;
+                                c.removeAttribute("id");
+                                c.removeAttribute("hidden");
+                                d.appendChild(c);
+                            }
+                            product.find('.add-product-image').attr('src', res[i].imageProduct);
+                            product.find('.add-product-name').text(res[i].nameProduct);
+                            product.find('.add-product-rom').append(d);
+                        }
+                        // Reset index list product of order
+                        $('.add-product-index:not(:eq(0))').each(function (index) {
+                            $(this).text(index + 1)
+                        });
+                    } else {
+                        Toast.fire({
+                            icon: 'info',
+                            title: `Không tìm thấy sản phẩm<br>phù hợp!`
+                        })
+                    }
+                },
+                error: function (err) {
+                    Toast.fire({
+                        icon: 'info',
+                        title: `Không tìm thấy sản phẩm<br>phù hợp!`
+                    })
+                }
+            })
+        }
+
+        function onClickSubmitAddOrderInvoice1(e) {
+            let getOrderCode = document.getElementById('ip-order-invoice-code');
+            let orderCode;
+            if (getOrderCode !== null && getOrderCode !== undefined) {
+                orderCode = getOrderCode.value;
+                if (orderCode === null || orderCode === undefined || orderCode === '') {
+                    toastDanger('Lỗi', 'Vui lòng nhập mã đặt hàng');
+                    return;
+                }
+                if (orderCode.length < 5 || orderCode.length > 50) {
+                    toastDanger('Lỗi', 'Mã đặt hàng từ 5 đến 50 ký tự');
+                    return;
+                }
+                let check = false;
+                $.ajax({
+                    url: '/api/order-invoice/code/' + orderCode,
+                    method: 'GET',
+                    success: function (data) {
+                        if (data === "ok") {
+                            toastDanger('Lỗi', 'Trùng mã đơn hàng');
+                        }
+                    },
+                    error: function (error) {
+                        toastDanger('Lỗi', error);
+
+                    }
+                })
+
+                if (check) {
+                    return;
+                }
+            }
+            let getDate = document.getElementById('ip-order-invoice-date');
+            let orderDate;
+            if (getDate !== null && getDate !== undefined) {
+                orderDate = getDate.value;
+                if (orderDate === null || orderDate === undefined || orderDate === '') {
+                    toastDanger('Lỗi', 'Vui lòng chọn ngày hẹn nhận');
+                    return;
+                }
+            }
+            let getSupplier = document.getElementById('ip-order-invoice-supplier');
+            let idSupplier;
+            if (getSupplier !== null && getSupplier !== undefined) {
+                idSupplier = getSupplier.value;
+                if (idSupplier === null || idSupplier === undefined) {
+                    toastDanger('Lỗi', 'Vui long chọn nhà cung cấp');
+                    return;
+                }
+            }
+            let getNote = document.getElementById('ip-order-invoice-note');
+            let note;
+            if (getNote !== null && getNote !== undefined) {
+                note = getNote.value;
+            }
+            let lstDetails = [];
+            let getTrProduct = document.getElementsByClassName('add-product1');
+
+            if (getTrProduct !== null && getTrProduct !== undefined) {
+                let count = 0;
+                for (const $tr of getTrProduct) {
+                    if(count === 0){
+                        count ++;
+                        continue;
+                    }
+                    if (Number($tr.childNodes[9].childNodes[1].value) <= 0) {
+                        toastDanger("Lỗi", "Vui lòng nhập số lượng lớn hơn 0");
+                        continue;
+                    }
+                    lstDetails.push({
+                        "romId" : $tr.childNodes[7].childNodes[3].innerText,
+                        "quantityInvoice": $tr.childNodes[9].childNodes[1].value,
+                        "colorId" : $tr.childNodes[5].childNodes[3].innerText,
+                    });
+                }
+            }
+
+
+
+            console.log(lstDetails);
+            if (lstDetails.length === 0) {
+                toastDanger('Lỗi', 'Vui lòng nhập số lượng ít nhất 1 sản phẩm');
+                return;
+            }
+            for (let i = 0; i < lstDetails.length; i++) {
+                for (let j = 0; j < lstDetails.length; j++) {
+                    if (lstDetails[i].romId === lstDetails[j].romId && i !== j && lstDetails[i].colorId === lstDetails[j].colorId) {
+                        toastDanger('Lỗi', 'Đã bị trùng sản phẩm xin vui lòng nhập lại');
+                        return;
+                    }
+                }
+            }
+
+
+            let orderInvoice = {
+                "note": note,
+                "receiveDate": orderDate,
+                "suppliderId": idSupplier,
+                "orderCode": orderCode,
+                "detailRequest": lstDetails,
+                "status": '-1'
+            };
+
+
+            console.log(orderInvoice);
+            $.ajax({
+                url: '/api/order-invoice',
+                method: 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(orderInvoice),
+                success: function (data) {
+                    toastSuccess('Thành công', 'Đã tạo mới hoá đơn đặt hàng NCC');
+                    $('.btn-close').click();
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000)
+                },
+                error: function (error) {
+                    toastDanger('Lỗi', error);
+                }
+            })
+
+        }
+    </script>
+</div>
+
+</body>
+</html>

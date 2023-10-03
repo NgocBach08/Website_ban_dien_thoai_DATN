@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<header th:fragment="header" id="page-topbar">
+    <div class="d-flex">
+        <div class="navbar-brand-box text-center">
+            <a href="index.html" tppabs="https://themesbrand.com/foxia/layouts/blue/index.html"
+               class="logo logo-light">
+                <span class="logo-sm">
+                    <img th:src="@{/assets/cssfile/logo-sm.png}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/logo-sm.png"
+                         alt="" height="22">
+                </span>
+                <span class="logo-lg">
+                    <img th:src="@{/assets/cssfile/logo.png}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/logo.png"
+                         alt="" height="20">
+                </span>
+            </a>
+            <a href="index.html" tppabs="https://themesbrand.com/foxia/layouts/blue/index.html"
+               class="logo logo-dark">
+                <span class="logo-sm">
+                    <img th:src="@{/assets/cssfile/logo-sm.png}"  tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/logo-sm.png"
+                         alt="" height="22">
+                </span>
+                <span class="logo-lg">
+                    <img th:src="@{/assets/cssfile/logo_dark.png}"
+                         tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/logo_dark.png" alt=""
+                         height="20">
+                </span>
+            </a>
+        </div>
+
+        <div class="navbar-header">
+            <button type="button" class="button-menu-mobile waves-effect" id="vertical-menu-btn">
+                <i class="mdi mdi-menu"></i>
+            </button>
+            <div class="d-flex ms-auto">
+                <!-- Search input -->
+                <div class="search-wrap" id="search-wrap">
+                    <div class="search-bar">
+                        <input class="search-input form-control" placeholder="Search">
+                        <a href="#" class="close-search toggle-search" data-target="#search-wrap">
+                            <i class="mdi mdi-close-circle"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="dropdown d-none d-md-block">
+                    <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <img class="flag-img me-2" src="assets/img/vn_flag.jpg"
+                             tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/flags/us_flag.jpg"
+                             alt="Header Language" height="16"> Tiếng việt <i class="mdi mdi-chevron-down"></i>
+                    </button>
+                </div>
+
+                <div class="dropdown">
+                    <button type="button" class="btn header-item toggle-search noti-icon waves-effect"
+                            data-target="#search-wrap">
+                        <i class="mdi mdi-magnify"></i>
+                    </button>
+                </div>
+
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn header-item noti-icon waves-effect"
+                            id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span class="badge bg-danger rounded-pill">3</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                         aria-labelledby="page-header-notifications-dropdown">
+                        <div class="p-3">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h5 class="m-0 font-size-16"> Notification (3) </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-simplebar style="max-height: 230px;">
+                            <a href="" class="text-reset notification-item d-block active">
+                                <div class="d-flex">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                            <i class="mdi mdi-cart-outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mt-0 font-size-15 mb-1">Your order is placed</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="" class="text-reset notification-item d-block">
+                                <div class="d-flex">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-danger rounded-circle font-size-16">
+                                            <i class="mdi mdi-message-text-outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mt-0 font-size-15 mb-1">New Message received</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p class="mb-1">You have 87 unread messages</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="" class="text-reset notification-item d-block">
+                                <div class="d-flex">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-info rounded-circle font-size-16">
+                                            <i class="mdi mdi-glass-cocktail"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mt-0 font-size-15 mb-1">Your item is shipped</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p class="mb-1">It is a long established fact that a reader will</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="" class="text-reset notification-item d-block">
+                                <div class="d-flex">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                            <i class="mdi mdi-message-text-outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mt-0 font-size-15 mb-1">New Message received</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p class="mb-1">You have 87 unread messages</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="" class="text-reset notification-item d-block">
+                                <div class="d-flex">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-warning rounded-circle font-size-16">
+                                            <i class="mdi mdi-cart-outline"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="mt-0 font-size-15 mb-1">Your order is placed</h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+
+                        <div class="p-2 border-top">
+                            <div class="d-grid">
+                                <a class="btn btn-sm btn-link font-size-14 text-start" href="javascript:void(0)">
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="rounded-circle header-profile-user" th:src="${session.user.avatar}" alt="Header Avatar" style="box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;">
+                        <span class="d-none d-md-inline-block ms-1">
+            <span th:text="${session.user.fullName}"></span>
+            <i class="mdi mdi-chevron-down"></i>
+          </span>
+                    </button>
+                    <!-- Menu Profile list-->
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="#" onclick="$('.modal-profile').modal('show');">
+                            <i class="dripicons-user font-size-16 align-middle me-2 text-muted"></i>
+                            Thông tin cá nhân
+                        </a>
+                        <a class="dropdown-item" href="#" onclick="$('.modal-password').modal('show');">
+                            <i class="dripicons-lock font-size-16 align-middle me-2 text-muted"></i>
+                            Đổi mật khẩu
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/logout">
+                            <i class="dripicons-exit font-size-16 align-middle me-2 text-muted"></i>
+                            Đăng xuất
+                        </a>
+                    </div>
+                    <!-- End Menu Profile list-->
+                </div>
+
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                        <i class="mdi mdi-spin mdi-cog"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-profile" tabindex="-1" style="display: none; top: 10%;" aria-hidden="true">
+        <div class="modal-dialog modal-l">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center ps-4 fs-3 fw-bolder" style="color: #655be6;">Thông tin cá nhân</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="my-3 fs-3 fw-bolder" th:switch="${session.user.role}">
+                        <span class="text-primary" th:case="'ROLE_ADMIN'">Quản lý</span>
+                        <span class="text-secondary" th:case="'ROLE_USER'">Nhân viên</span>
+                    </div>
+                    <div th:switch="${session.user.role}">
+                        <img th:case="'ROLE_ADMIN'" th:src="${session.user.avatar}" class="rounded-circle border border-3 border-primary" alt="avatar" style="width: 160px; box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                        <img th:case="'ROLE_ACC'" th:src="${session.user.avatar}" class="rounded-circle border border-3 border-warning" alt="avatar" style="width: 160px; box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                    </div>
+                    <div class="my-3 fs-4 fw-bolder" th:text="${session.user.fullName}"></div>
+                    <div class="my-3" th:text="${#dates.format(session.user.dateOfBirth, 'dd/MM/yyyy')}"></div>
+                    <div class="mb-3" th:switch="${session.user.role}">
+                        <span th:case="'ROLE_ADMIN'">Quản lý</span>
+                        <span th:case="'ROLE_ACC'">Nhân viên kế toán</span>
+                        <span th:case="'ROLE_STOCK'">Nhân viên kiểm kho</span>
+                        <span th:case="'ROLE_USER'">Nhân viên bán hàng</span>
+                    </div>
+                    <a href="#" class="my-3" th:text="${session.user.email}"></a>
+                    <div class="my-3 text-decoration-underline" th:text="${session.user.phoneNumber}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Change password -->
+    <div class="modal fade modal-password" tabindex="-1" style="display: none; top: 10%;" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center ps-4 fs-3 fw-bolder" style="color: #655be6;">Đổi mật khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#formPassword').trigger('reset')"></button>
+                </div>
+                <form id="formPassword" class="modal-body text-center">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="old-pass" name="passwordOld" placeholder="Mật khẩu cũ">
+                        <label for="old-pass">Mật khẩu cũ</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="new-pass" name="passwordNew" placeholder="Mật khẩu mới">
+                        <label for="new-pass">Mật khẩu mới</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="confirm-pass" name="passwordComfirm" placeholder="Xác nhận mật khẩu">
+                        <label for="confirm-pass">Xác nhận mật khẩu</label>
+                    </div>
+                    <input type="hidden" name="id" id="iduser" th:value="${session.user.id}">
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('#formPassword').trigger('reset')">
+                        <i class="fas fa-ban me-2"></i>
+                        Đóng
+                    </button>
+                    <button type="button" id="btnChangePassword1" class="btn btn-primary waves-effect waves-light">
+                        <i class="fas fa-save pe-2"></i>
+                        Xác nhận
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function readAllNotification(){
+            $.ajax({
+                url: '/api/notification/read-all',
+                success: function (datas) {
+                    loadNotifyHead();
+                },
+                error: function (error) {
+                    console.log(error)
+                },
+                method: 'PUT'
+            })
+        }
+    </script>
+    <!-- End Change password -->
+</header>
+
+</html>

@@ -1,0 +1,55 @@
+package com.example.testhtml.api.attribute;
+
+import com.example.testhtml.dto.request.attribute.rom.RomRequest;
+import com.example.testhtml.dto.respone.attribute.rom.RomRespone;
+import com.example.testhtml.service.IRomValueService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * Description:
+ *
+ * @author: hieu
+ * @since: 07/07/2022
+ * Project_name: com.example.testhtml.api.attribute
+ */
+
+@RestController
+@RequestMapping("/api/rom")
+public class RomApi {
+    @Autowired
+    private IRomValueService service;
+
+    @GetMapping("/{id}")
+    public RomRespone findById(@PathVariable("id") String id) {
+        return service.findById(Long.valueOf(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addScreen(@RequestBody RomRequest request) {
+        String status = service.save(request);
+        if (status.equalsIgnoreCase("ok")) {
+            return ResponseEntity.ok().body(request);
+        }
+        return ResponseEntity.badRequest().body(request);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateScreen(@RequestBody RomRequest request) {
+        String status = service.update(request);
+        if (status.equalsIgnoreCase("ok")) {
+            return ResponseEntity.ok().body(request);
+        }
+        return ResponseEntity.badRequest().body(request);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteScreen(@PathVariable("id") Long id) {
+        String status = service.delete(id);
+        if (status.equalsIgnoreCase("ok")) {
+            return ResponseEntity.ok().body("ok");
+        }
+        return ResponseEntity.badRequest().body("false");
+    }
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/weblayout}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Trang chủ</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css"
+          rel="stylesheet">
+    <script th:src="@{/system/datepicker.min.js}"></script>
+
+</head>
+
+<body>
+<div layout:fragment="content" class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12" id="rightKH">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Top 10 sản phẩm bán chạy trong tháng</h4>
+                                    <div class="row mt-3">
+                                        <p style="width: 100px;margin-bottom: 0px;padding-top: 5px">Thời gian: </p>
+                                        <input type="text" class="form-control" style="width: 150px; margin-top: -10px"
+                                               name="datepicker" id="datepicker"/>
+                                        <button style="width: 110px; margin-left: 20px" class="btn btn-primary"
+                                                onclick="onLoadTopProductSaleByMonth()">Tìm kiếm
+                                        </button>
+                                    </div>
+
+
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Top</th>
+                                                <th scope="col">Hình ảnh</th>
+                                                <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Màu sản phẩm</th>
+                                                <th scope="col">Bộ nhớ trong</th>
+                                                <th scope="col">Giá</th>
+                                                <th scope="col">Tổng số lượng bán</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="topProductSaleByMonth">
+                                            </tbody>
+                                        </table>
+
+
+                                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                            <script>
+                                                const ctx02 = document.getElementById('chartContainer');
+                                                const myChart02 = new Chart(ctx02, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                                                        datasets: [{
+                                                            label: 'Lợi nhuận',
+                                                            data: [],
+                                                            borderColor: 'rgb(82, 0, 255)',
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false
+                                                            },
+                                                            responsive: true,
+                                                            maintainAspectRatio: false
+                                                        }
+                                                    }
+                                                });
+
+                                            </script>
+                                            <script>
+                                                let now = new Date()
+                                                $("#datepicker").datepicker({
+                                                    format: "mm-yyyy",
+                                                    startView: "months",
+                                                    minViewMode: "months"
+                                                })
+
+                                                document.getElementById('datepicker').value = ((now.getMonth() + 1) < 10 ? ('0' + (now.getMonth() + 1)) : (now.getMonth() + 1)) + '-' + now.getFullYear()
+                                                getTopProductSaleByMonth((now.getMonth() + 1), now.getFullYear())
+                                                getStatisProfit(now.getFullYear())
+
+                                                function onLoadTopProductSaleByMonth() {
+                                                    let monthVal = document.getElementById('datepicker').value;
+                                                    let month = monthVal.substring(0, 2)
+                                                    let year = monthVal.substring(3, monthVal.length)
+                                                    getTopProductSaleByMonth(month, year)
+                                                }
+
+                                                function getStatisProfit(year) {
+                                                    $.ajax({
+                                                        url: '/statis-profit?year=' + year,
+                                                        success: function (datas) {
+                                                            let dataChart = new Array();
+                                                            for (let i = 1; i <= 12; i++) {
+                                                                dataChart.push({
+                                                                    month: i,
+                                                                    profit: getProfitMonth(i, datas)
+                                                                })
+                                                            }
+                                                            console.log(dataChart)
+                                                            myChart02.data.datasets[0].data = new Array();
+                                                            for (let profit of dataChart) {
+                                                                myChart02.data.datasets[0].data.push(profit.profit);
+                                                            }
+
+                                                            console.log(myChart02.data.datasets[0].data)
+                                                            myChart02.update();
+
+                                                        },
+                                                        error: function (error) {
+                                                            console.log(error)
+                                                        }
+                                                    })
+                                                }
+
+                                                function getProfitMonth(i, datas) {
+                                                    let profit = 0;
+                                                    for (let data of datas) {
+                                                        if (data.month == i) {
+                                                            profit = data.profit;
+                                                            break;
+                                                        }
+                                                    }
+                                                    return profit;
+                                                }
+
+                                                window.onload = function () {
+                                                    getTopProductSaleByMonth(12, 2022);
+                                                };
+
+                                                function getTopProductSaleByMonth(month, year) {
+                                                    $.ajax({
+                                                        url: '/top-product-sale/' + month + '/' + year,
+                                                        success: function (datas) {
+                                                            console.log(datas)
+                                                            let topProductSaleByMonth = document.getElementById("topProductSaleByMonth")
+                                                            topProductSaleByMonth.innerHTML = ''
+                                                            for (let data of datas) {
+                                                                topProductSaleByMonth.innerHTML +=
+                                                                    '<tr>\n' +
+                                                                    '                                                <th scope="row">' + (datas.indexOf(data) + 1) + '</th>\n' +
+                                                                    '                                                <td>\n' +
+                                                                    '                                                    <div>\n' +
+                                                                    '                                                        <img src="' + data.img + '" alt="" class="avatar-xs rounded-circle me-2">' +
+                                                                    '                                                    </div>\n' +
+                                                                    '                                                </td>\n' +
+                                                                    '                                                <td>' + data.nameProduct + '</td>\n' +
+                                                                    '                                                <td>' + data.colorProduct + '</span></td>\n' +
+                                                                    '                                                <td>' + data.romProduct + '</span></td>\n' +
+                                                                    '                                                <td>' + data.priceProduct.toLocaleString('vi-VN') + ' đ' + '</td>\n' +
+                                                                    '                                                <td>' + data.quantityDaBan + '</td>\n' +
+
+                                                                    '                                            </tr>'
+                                                            }
+                                                        },
+                                                        error: function (error) {
+                                                            console.log(error)
+                                                        }
+                                                    })
+                                                }
+                                            </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

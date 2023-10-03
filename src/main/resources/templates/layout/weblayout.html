@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Animation | Foxia - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" th:href="@{/assets/img/logo.png}">
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/dataTables.bootstrap4.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/buttons.bootstrap4.min.css}">
+    <!-- Responsive datatable examples -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/responsive.bootstrap4.min.css}">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker.standalone.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker3.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker3.standalone.min.css}">
+    <!-- Font Awesome 5.15.4 -->
+    <link rel="stylesheet" th:href="@{/assets/css/fontawesome.min.css}"/>
+
+    <!-- App Css-->
+    <!-- Chosen -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/chosen.min.css}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/toastr/toastr.min.css}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!-- SweetAlert2-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="shortcut icon" th:href="@{/assets/cssfile/favicon.ico}"
+          tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/favicon.ico">
+
+    <!-- Plugins css -->
+    <link th:href="@{/assets/cssfile/prism.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/prismjs/themes/prism.css"
+          rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Css -->
+    <link th:href="@{/assets/cssfile/bootstrap.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/bootstrap-dark.min.css"
+          id="bootstrap-style" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link th:href="@{/assets/cssfile/icons.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/icons.min.css"
+          rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link th:href="@{/assets/cssfile/app.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/app-dark.min.css" id="app-style"
+          rel="stylesheet" type="text/css">
+    <script th:src="@{/assets/js/jquery.dataTables.min.js}"></script>
+</head>
+<body data-sidebar="dark">
+
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner"></div>
+    </div>
+</div>
+
+<div id="layout-wrapper">
+    <!--header-->
+    <div  th:replace="~{commons/header :: header}"></div>
+    <div class="vertical-menu">
+
+        <div data-simplebar class="h-100">
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu list-unstyled" id="side-menu">
+                    <li>
+                        <a href="/" tppabs="https://themesbrand.com/foxia/layouts/blue/index.html"
+                           class="waves-effect">
+                            <i class="dripicons-meter"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="fas fa-box-open"></i>
+                            <span> Hàng hoá </span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a th:href="@{/cate}"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Danh mục</a></li>
+                            <li><a th:href="@{/product}"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-read.html">Sản phẩm</a>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow">Thuộc tính</a>
+                                <ul class="sub-menu mm-collapse" aria-expanded="true">
+                                    <li><a th:href="@{/color}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-light-sidebar.html">Màu sắc</a></li>
+                                    <li><a th:href="@{/chip}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-compact-sidebar.html">Chip</a></li>
+                                    <li><a th:href="@{/cam}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-icon-sidebar.html">Camera</a></li>
+                                    <li><a th:href="@{/os}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-boxed.html">Hệ điều hành</a></li>
+                                    <li><a th:href="@{/pin}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-dark-sidebar.html">Pin</a></li>
+                                    <li><a th:href="@{/ram}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-dark-sidebar.html">Ram</a></li>
+                                    <li><a th:href="@{/screen}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-dark-sidebar.html">Màn Hinh</a></li>
+                                    <li><a th:href="@{/romvalue}"
+                                           tppabs="https://themesbrand.com/foxia/layouts/blue/layouts-dark-sidebar.html">Bộ nhớ trong</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Giao Dịch</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_STOCK')" th:href="@{/invoice}"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Nhập hàng</a></li>
+                            <li><a href="/order-invoice"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-read.html">Đặt hàng NCC</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Đối tác</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" href="/staff" class="dropdown-item"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Nhân viên</a></li>
+                            <li><a href="/supplier"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-read.html">Nhà cung cấp</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+                            <i class="bi bi-bag"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/orders"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Hoá đơn</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="page-content">
+            <div layout:fragment="content"></div>
+        </div>
+
+
+        <!--footer-->
+        <div th:replace="~{commons/footer :: footer}"></div>
+
+    </div>
+</div>
+
+<!--<div class="right-bar">-->
+<!--    <div data-simplebar class="h-100">-->
+<!--        <div class="rightbar-title px-3 py-4">-->
+<!--            <a href="javascript:void(0);" class="right-bar-toggle float-end">-->
+<!--                <i class="mdi mdi-close noti-icon"></i>-->
+<!--            </a>-->
+<!--            <h5 class="m-0">Settings</h5>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Settings &ndash;&gt;-->
+<!--        <hr class="mt-0">-->
+<!--        <h6 class="text-center mb-0">Choose Layouts</h6>-->
+
+<!--        <div class="p-4">-->
+<!--            <div class="mb-2">-->
+<!--                <img src="layout-1.jpg"-->
+<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-1.jpg"-->
+<!--                     class="img-fluid img-thumbnail" alt="">-->
+<!--            </div>-->
+<!--            <div class="form-check form-switch mb-3">-->
+<!--                <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch">-->
+<!--                <label class="form-check-label" for="light-mode-switch">Light Mode</label>-->
+<!--            </div>-->
+
+<!--            <div class="mb-2">-->
+<!--                <img src="layout-2.jpg"-->
+<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-2.jpg"-->
+<!--                     class="img-fluid img-thumbnail" alt="">-->
+<!--            </div>-->
+
+<!--            <div class="form-check form-switch mb-3">-->
+<!--                <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch"-->
+<!--                       data-bsStyle="assets/css/bootstrap-dark.min.css" data-appStyle="assets/css/app-dark.min.css">-->
+<!--                <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>-->
+<!--            </div>-->
+
+<!--            <div class="mb-2">-->
+<!--                <img src="layout-3.jpg"-->
+<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-3.jpg"-->
+<!--                     class="img-fluid img-thumbnail" alt="">-->
+<!--            </div>-->
+
+<!--            <div class="form-check form-switch mb-3">-->
+<!--                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch"-->
+<!--                       data-appStyle="assets/css/app-rtl.min.css">-->
+<!--                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>-->
+<!--            </div>-->
+
+
+<!--        </div>-->
+
+<!--    </div> &lt;!&ndash; end slimscroll-menu&ndash;&gt;-->
+<!--</div>-->
+
+<div class="rightbar-overlay">
+
+</div>
+
+<script>
+</script>
+
+
+<!-- JAVASCRIPT -->
+<script th:src="@{/assets/cssfile/jquery.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/jquery/jquery.min.js"></script>
+<script th:src="@{/assets/cssfile/bootstrap.bundle.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/assets/cssfile/metisMenu.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/metismenu/metisMenu.min.js"></script>
+<script th:src="@{/assets/cssfile/simplebar.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/simplebar/simplebar.min.js"></script>
+<script th:src="@{/assets/cssfile/waves.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/node-waves/waves.min.js"></script>
+
+<!-- Animate Js -->
+<script th:src="@{/assets/cssfile/animate-init.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/js/pages/animate-init.js"></script>
+
+<script th:src="@{/assets/cssfile/app.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/js/app.js"></script>
+
+
+
+<script th:src="@{/assets/js/moment.min.js}"></script>
+
+<script th:src="@{/assets/js/morris.min.js}"></script>
+
+<script th:src="@{/assets/js/raphael.min.js}"></script>
+
+<script th:src="@{/assets/js/jquery.peity.min.js}"></script>
+
+<script th:src="@{/assets/js/dashboard.init.js}"></script>
+
+<script th:src="@{/assets/js/fontawesome.init.js}"></script>
+
+
+<script th:src="@{/assets/js/chosen.jquery.js}"></script>
+<script th:src="@{/assets/js/chosen.proto.min.js}"></script>
+<script th:src="@{/assets/js/chosen.init.js}"></script>
+
+<script th:src="@{/assets/js/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/assets/js/dataTables.buttons.min.js}"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+<script th:src="@{/assets/js/buttons.bootstrap4.min.js}"></script>
+<script th:src="@{/assets/js/jszip.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script th:src="@{/assets/js/buttons.html5.min.js}"></script>
+<script th:src="@{/assets/js/buttons.print.min.js}"></script>
+<script th:src="@{/assets/js/buttons.colVis.min.js}"></script>
+<script th:src="@{/assets/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{/assets/js/responsive.bootstrap4.min.js}"></script>
+
+<script th:src="@{/assets/js/datatables.init.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/toastr/toa.js}"></script>
+
+<script th:src="@{/assets/js/script.js}"></script>
+<script th:src="@{/system/order.js}"></script>
+<script th:src="@{/system/notification.js}"></script>
+
+<script layout:fragment="script"></script>
+<script>
+    loadNotifyHead();
+    let t1 = null
+    let t = null
+
+    let href = window.location.href;
+    if(href.indexOf('orders') > -1){
+        t = $('#datatable').DataTable({
+            paging: false,
+            lengthChange: !1,
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "targets": [0, 1],
+            }],
+            buttons: [{
+                extend: 'copy',
+                text: '<i class="fas fa-copy"></i>',
+                titleAttr: 'Sao chép'
+            },
+                {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel"></i>',
+                    titleAttr: 'Excel'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    text: '<i class="fas fa-file-pdf"></i>',
+                    titleAttr: 'PDF'
+                },
+                {
+                    extend: 'colvis',
+                    text: '<i class="fas fa-filter"></i>',
+                    titleAttr: 'Hiển thị tuỳ chỉnh'
+                }],
+
+            scrollY: "54vh",
+            scrollX: true,
+            scrollCollapse: true,
+
+            info: false,
+            columns: [
+                {data: 'stt', className: "text-center"},
+                {data: 'action', className: "text-center"},
+                {data: 'orderId', className: "text-center order-id"},
+                {data: 'tax', className: "text-end order-tax"},
+                {data: 'createDate', className: "text-center"},
+                {data: 'type', className: "text-center"},
+                {data: 'payment', className: "text-center"},
+            ]
+        });
+
+        t.buttons().container().appendTo("#datatable_wrapper .col-md-6:eq(0)"),
+            $(".dataTables_length select").addClass("form-select form-select-sm");
+        $("body").find(".dataTables_scrollBody").addClass("scrollbar");
+
+        t.on('order.dt search.dt', function () {
+            t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+    }
+    else if(href.indexOf('notification') > -1){
+        t1 = $('#datatable').DataTable({
+            lengthChange: !1,
+            "ordering": false,
+
+            info: false,
+            columns: [
+                {data: 'btn', className: "text-left"},
+                {data: 'content', className: "text-left"},
+                {data: 'time', className: "text-left"}
+            ]
+        });
+
+        getNotification()
+    }
+    connect();
+</script>
+<script>
+    $('#btnChangePassword1').click(function () {
+        var oldPass = $('#old-pass').val();
+        var newPass = $('#new-pass').val();
+        var confirmPass = $('#confirm-pass').val();
+        var id = $('#iduser').val();
+        if(oldPass.length === 0){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'error',
+                title: 'Vui lòng nhập mật khẩu cũ'
+            })
+            return;
+        }
+        if(confirmPass.length === 0 || newPass.length === 0){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'error',
+                title: 'Vui lòng nhập mật khẩu mới'
+            })
+            return;
+        }
+
+        if(confirmPass !== newPass){
+            $('#confirm-pass').val('');
+            $('#new-pass').val('');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'error',
+                title: 'Mật khẩu xác nhận chưa giống nhau'
+            })
+            return;
+        }
+        console.log(id);
+        $.ajax({
+            url: '/api/staff/change-password/' + id + '/' + oldPass + '/' + newPass,
+            type: 'PUT',
+            success: function (result) {
+                console.log(result)
+                $('.modal-add-staff').modal('hide');
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Đổi mật khẩu thành công',
+                    showConfirmButton: true,
+                    timerProgressBar: true,
+                    timer: 2000
+                }).then(()=> window.location.reload());
+            },
+            error: function (error) {
+                console.log(error)
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                Toast.fire({
+                    icon: 'error',
+                    title: error.responseText
+                })
+            }
+        })
+
+    })
+</script>
+
+</body>
+</html>
