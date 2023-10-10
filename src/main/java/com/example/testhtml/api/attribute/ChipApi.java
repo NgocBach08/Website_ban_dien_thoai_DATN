@@ -50,6 +50,7 @@ public class ChipApi {
         if (status.equalsIgnoreCase("ok")) {
             return ResponseEntity.ok().body("ok");
         }
+        System.out.println("kien1231");
         return ResponseEntity.badRequest().body("false");
     }
 }
