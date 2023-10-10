@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml" data-bs-theme="dark">
 
 <head>
 
@@ -44,8 +44,8 @@
           rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Css -->
-    <link th:href="@{/assets/cssfile/bootstrap.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/bootstrap-dark.min.css"
-          id="bootstrap-style" rel="stylesheet" type="text/css">
+<!--    <link th:href="@{/assets/cssfile/bootstrap.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/bootstrap-dark.min.css"-->
+<!--          id="bootstrap-style" rel="stylesheet" type="text/css">-->
     <!-- Icons Css -->
     <link th:href="@{/assets/cssfile/icons.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/icons.min.css"
           rel="stylesheet" type="text/css">
@@ -53,6 +53,8 @@
     <link th:href="@{/assets/cssfile/app.min.css}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/css/app-dark.min.css" id="app-style"
           rel="stylesheet" type="text/css">
     <script th:src="@{/assets/js/jquery.dataTables.min.js}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body data-sidebar="dark">
 
@@ -92,6 +94,9 @@
                                    tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Danh mục</a></li>
                             <li><a th:href="@{/product}"
                                    tppabs="https://themesbrand.com/foxia/layouts/blue/email-read.html">Sản phẩm</a>
+                            </li>
+                            <li><a th:href="@{/productdetail}"
+                                   tppabs="https://themesbrand.com/foxia/layouts/blue/email-read.html">Chi tiết sản phẩm</a>
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow">Thuộc tính</a>
@@ -167,9 +172,9 @@
 
 
         <!--footer-->
-        <div th:replace="~{commons/footer :: footer}"></div>
 
     </div>
+    <div th:replace="~{commons/footer :: footer}"></div>
 </div>
 
 <!--<div class="right-bar">-->
@@ -229,7 +234,73 @@
 <div class="rightbar-overlay">
 
 </div>
+<div class="modal fade modal-profile" tabindex="-1" style="display: none; top: 10%;" aria-hidden="true">
+    <div class="modal-dialog modal-l">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center ps-4 fs-3 fw-bolder" style="color: #655be6;">Thông tin cá nhân</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="my-3 fs-3 fw-bolder" th:switch="${session.user.role}">
+                    <span class="text-primary" th:case="'ROLE_ADMIN'">Quản lý</span>
+                    <span class="text-secondary" th:case="'ROLE_USER'">Nhân viên</span>
+                </div>
+                <div th:switch="${session.user.role}">
+                    <img th:case="'ROLE_ADMIN'" th:src="${session.user.avatar}" class="rounded-circle border border-3 border-primary" alt="avatar" style="width: 160px; box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                    <img th:case="'ROLE_ACC'" th:src="${session.user.avatar}" class="rounded-circle border border-3 border-warning" alt="avatar" style="width: 160px; box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                </div>
+                <div class="my-3 fs-4 fw-bolder" th:text="${session.user.fullName}"></div>
+                <div class="my-3" th:text="${#dates.format(session.user.dateOfBirth, 'dd/MM/yyyy')}"></div>
+                <div class="mb-3" th:switch="${session.user.role}">
+                    <span th:case="'ROLE_ADMIN'">Quản lý</span>
+                    <span th:case="'ROLE_ACC'">Nhân viên kế toán</span>
+                    <span th:case="'ROLE_STOCK'">Nhân viên kiểm kho</span>
+                    <span th:case="'ROLE_USER'">Nhân viên bán hàng</span>
+                </div>
+                <a href="#" class="my-3" th:text="${session.user.email}"></a>
+                <div class="my-3 text-decoration-underline" th:text="${session.user.phoneNumber}"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal Change password -->
+<div class="modal fade modal-password" tabindex="-1" style="display: none; top: 10%;" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center ps-4 fs-3 fw-bolder" style="color: #655be6;">Đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#formPassword').trigger('reset')"></button>
+            </div>
+            <form id="formPassword" class="modal-body text-center">
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="old-pass" name="passwordOld" placeholder="Mật khẩu cũ">
+                    <label for="old-pass">Mật khẩu cũ</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="new-pass" name="passwordNew" placeholder="Mật khẩu mới">
+                    <label for="new-pass">Mật khẩu mới</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="confirm-pass" name="passwordComfirm" placeholder="Xác nhận mật khẩu">
+                    <label for="confirm-pass">Xác nhận mật khẩu</label>
+                </div>
+                <input type="hidden" name="id" id="iduser" th:value="${session.user.id}">
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('#formPassword').trigger('reset')">
+                    <i class="fas fa-ban me-2"></i>
+                    Đóng
+                </button>
+                <button type="button" id="btnChangePassword1" class="btn btn-primary waves-effect waves-light">
+                    <i class="fas fa-save pe-2"></i>
+                    Xác nhận
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 </script>
 
@@ -265,10 +336,10 @@
 <script th:src="@{/assets/js/chosen.proto.min.js}"></script>
 <script th:src="@{/assets/js/chosen.init.js}"></script>
 
-<script th:src="@{/assets/js/dataTables.bootstrap4.min.js}"></script>
+<!--<script th:src="@{/assets/js/dataTables.bootstrap4.min.js}"></script>-->
 <script th:src="@{/assets/js/dataTables.buttons.min.js}"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-<script th:src="@{/assets/js/buttons.bootstrap4.min.js}"></script>
+<!--<script th:src="@{/assets/js/buttons.bootstrap4.min.js}"></script>-->
 <script th:src="@{/assets/js/jszip.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
