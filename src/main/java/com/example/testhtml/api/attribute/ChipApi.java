@@ -44,12 +44,5 @@ public class ChipApi {
         return ResponseEntity.badRequest().body(request);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteChip(@PathVariable("id") Long id) {
-        String status = service.deleteChip(id);
-        if (status.equalsIgnoreCase("ok")) {
-            return ResponseEntity.ok().body("ok");
-        }
-        return ResponseEntity.badRequest().body("false");
-    }
+
 }
