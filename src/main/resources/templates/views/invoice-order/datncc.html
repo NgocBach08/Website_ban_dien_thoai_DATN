@@ -68,13 +68,12 @@
             <div class="card">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card-body overflow-auto">
+                        <div class="card-body overflow-auto table-responsive" style="max-height: 700px;">
                             <table id="datatable"
                                    class="table table-responsive table-hover table-bordered nowrap dataTable no-footer shadow"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr class="text-center">
-                                    <th>STT</th>
                                     <th>Chức năng</th>
                                     <th>Mã đặt hàng</th>
                                     <th>NCC</th>
@@ -85,7 +84,6 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="orderInvoice : ${lstInvoiceOrder}" class="text-center">
-                                    <td></td>
                                     <td class="text-center">
                                         <button th:if="${orderInvoice.status != 2 && orderInvoice.status != 0 && orderInvoice.status != 3}" class="btn btn-danger btn-sm"
                                                 th:data-id="${orderInvoice.id}"
