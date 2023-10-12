@@ -29,5 +29,25 @@ public class CateApi {
         return ResponseEntity.badRequest().body(request);
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateScreen(@RequestBody CategoryDTO request) {
+        System.out.println(request);
+        String status = service.edit(request);
+        if (status.equalsIgnoreCase("ok")) {
+            return ResponseEntity.ok().body(request);
+        }
+        return ResponseEntity.badRequest().body(request);
 
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteScreen(@PathVariable("id") Long id) {
+        System.out.println(id);
+
+        String status = service.delete(id);
+        if (status.equalsIgnoreCase("ok")) {
+            return ResponseEntity.ok().body("ok");
+        }
+        return ResponseEntity.badRequest().body("false");
+    }
 }
