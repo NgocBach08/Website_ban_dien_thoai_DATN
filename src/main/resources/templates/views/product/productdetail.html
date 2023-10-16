@@ -94,7 +94,7 @@
                                         <td class="text-center">
                                             <a href="#modal-edit-product-detail" th:data-id="${product.id}"
                                                data-bs-toggle="modal"
-                                               class="btn btn-primary btn-sm waves-effect waves-light" onclick="onClickEditProduct(this)">Chỉnh sửa chi tiết</a>
+                                               class="btn btn-primary btn-sm waves-effect waves-light" onclick="$('.modal-edit-product-detail').modal('show'); onClickEditProduct(this);">Chỉnh sửa chi tiết</a>
                                         </td>
                                         <td class="text-wrap">
                                             <label th:for="${'for-' + product.id}"
@@ -585,7 +585,7 @@
 
 
 <!--    modal edit chi tiết-->
-    <div id="modal-edit-product-detail" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+    <div id="modal-edit-product-detail" class="modal fade show modal-edit-product-detail" style="display: block;" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

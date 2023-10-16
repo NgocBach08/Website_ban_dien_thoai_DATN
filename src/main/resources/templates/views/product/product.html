@@ -52,7 +52,7 @@
 <!--                </a>-->
                 <a type="button" data-bs-target="#modal-add-product"
                    class="btn btn-primary col-auto mb-3 waves-effect waves-light"
-                   data-bs-toggle="modal" onclick="$('.modal-add-product').modal('show');">
+                   data-bs-toggle="modal" onclick="$('.modal-add-product').modal('show');" >
                     <i class="fas fa-plus me-2"></i>
                     Sản phẩm
                 </a>
@@ -95,7 +95,7 @@
                                             <a href="#modal-edit-product" th:data-id="${product.id}"
                                                data-bs-toggle="modal"
                                                class="btn btn-primary btn-sm waves-effect waves-light"
-                                               onclick="onClickEditProduct(this)">
+                                               onclick="$('.modal-edit-product').modal('show'); onClickEditProduct(this);">
                                                 Chỉnh sửa
                                             </a>
 
@@ -356,7 +356,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div id="modal-edit-product" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+    <div id="modal-edit-product" class="modal fade show modal-edit-product" style="display: block;" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1459,7 +1459,7 @@
 
                         }
                     }
-                    if(checkDetail){
+                    if(!checkDetail){
                         document.getElementById("updateDetail").style.display = "none";
                     }
                     if (getElementProductName !== null) {
@@ -1521,6 +1521,7 @@
 
                 }
             })
+
         }
 
         function onClickDeleteProduct(e) {
@@ -2031,11 +2032,11 @@
     <script th:src="@{/system/attribute_screen.js}"></script>
 
 </div>
-<div layout:fragment="script">
-    <script th:src="@{/assets/js/dropzone.min.js}"></script>
-<!--    <script th:src="@{/assets/js/bootstrap-datepicker.min.js}"></script>-->
-    <script th:src="@{/assets/js/form-advanced.init.js}"></script>
-</div>
+<!--<div layout:fragment="script">-->
+<!--    <script th:src="@{/assets/js/dropzone.min.js}"></script>-->
+<!--&lt;!&ndash;    <script th:src="@{/assets/js/bootstrap-datepicker.min.js}"></script>&ndash;&gt;-->
+<!--    <script th:src="@{/assets/js/form-advanced.init.js}"></script>-->
+<!--</div>-->
 
 
 </body>
