@@ -150,13 +150,13 @@
                         </ul>
                     </li>
 
-                    <li class="">
+                    <li  sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')">
                         <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
                             <i class="bi bi-bag"></i>
                             <span>Bán hàng</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="/orders"
+                            <li><a href="/orders" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')"
                                    tppabs="https://themesbrand.com/foxia/layouts/blue/email-inbox.html">Hoá đơn</a></li>
                         </ul>
                     </li>
@@ -177,59 +177,6 @@
     <div th:replace="~{commons/footer :: footer}"></div>
 </div>
 
-<!--<div class="right-bar">-->
-<!--    <div data-simplebar class="h-100">-->
-<!--        <div class="rightbar-title px-3 py-4">-->
-<!--            <a href="javascript:void(0);" class="right-bar-toggle float-end">-->
-<!--                <i class="mdi mdi-close noti-icon"></i>-->
-<!--            </a>-->
-<!--            <h5 class="m-0">Settings</h5>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Settings &ndash;&gt;-->
-<!--        <hr class="mt-0">-->
-<!--        <h6 class="text-center mb-0">Choose Layouts</h6>-->
-
-<!--        <div class="p-4">-->
-<!--            <div class="mb-2">-->
-<!--                <img src="layout-1.jpg"-->
-<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-1.jpg"-->
-<!--                     class="img-fluid img-thumbnail" alt="">-->
-<!--            </div>-->
-<!--            <div class="form-check form-switch mb-3">-->
-<!--                <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch">-->
-<!--                <label class="form-check-label" for="light-mode-switch">Light Mode</label>-->
-<!--            </div>-->
-
-<!--            <div class="mb-2">-->
-<!--                <img src="layout-2.jpg"-->
-<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-2.jpg"-->
-<!--                     class="img-fluid img-thumbnail" alt="">-->
-<!--            </div>-->
-
-<!--            <div class="form-check form-switch mb-3">-->
-<!--                <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch"-->
-<!--                       data-bsStyle="assets/css/bootstrap-dark.min.css" data-appStyle="assets/css/app-dark.min.css">-->
-<!--                <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>-->
-<!--            </div>-->
-
-<!--            <div class="mb-2">-->
-<!--                <img src="layout-3.jpg"-->
-<!--                     tppabs="https://themesbrand.com/foxia/layouts/blue/assets/images/layouts/layout-3.jpg"-->
-<!--                     class="img-fluid img-thumbnail" alt="">-->
-<!--            </div>-->
-
-<!--            <div class="form-check form-switch mb-3">-->
-<!--                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch"-->
-<!--                       data-appStyle="assets/css/app-rtl.min.css">-->
-<!--                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>-->
-<!--            </div>-->
-
-
-<!--        </div>-->
-
-<!--    </div> &lt;!&ndash; end slimscroll-menu&ndash;&gt;-->
-<!--</div>-->
 
 <div class="rightbar-overlay">
 
@@ -307,7 +254,7 @@
 
 <!-- JAVASCRIPT -->
 <script th:src="@{/assets/cssfile/jquery.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/jquery/jquery.min.js"></script>
-<script th:src="@{/assets/cssfile/bootstrap.bundle.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script th:src="@{/assets/cssfile/bootstrap.bundle.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 <script th:src="@{/assets/cssfile/metisMenu.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/metismenu/metisMenu.min.js"></script>
 <script th:src="@{/assets/cssfile/simplebar.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/simplebar/simplebar.min.js"></script>
 <script th:src="@{/assets/cssfile/waves.min.js}" tppabs="https://themesbrand.com/foxia/layouts/blue/assets/libs/node-waves/waves.min.js"></script>

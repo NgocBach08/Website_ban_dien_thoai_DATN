@@ -94,7 +94,7 @@
                                         <td class="text-center">
                                             <a href="#modal-edit-product-detail" th:data-id="${product.id}"
                                                data-bs-toggle="modal"
-                                               class="btn btn-primary btn-sm waves-effect waves-light" onclick="onClickEditProduct(this)">Chỉnh sửa chi tiết</a>
+                                               class="btn btn-primary btn-sm waves-effect waves-light" onclick="$('.modal-edit-product-detail').modal('show'); onClickEditProduct(this);">Chỉnh sửa chi tiết</a>
                                         </td>
                                         <td class="text-wrap">
                                             <label th:for="${'for-' + product.id}"
@@ -200,9 +200,7 @@
                                             </select>
 
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openScreen()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-lg-3">
@@ -217,9 +215,7 @@
                                             </select>
 
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openOS()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-lg-3">
@@ -233,9 +229,7 @@
                                                 </th:block>
                                             </select>
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openCam()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
 
                                 </div>
@@ -255,9 +249,7 @@
                                                     </th:block>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openChip()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-lg-3">
@@ -272,9 +264,7 @@
                                                 </select>
 
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openRam()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-lg-3">
@@ -301,9 +291,7 @@
                                                     </th:block>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openPin()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -439,9 +427,7 @@
                                             </select>
 
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openScreen()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-lg-3">
@@ -456,9 +442,7 @@
                                             </select>
 
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openOS()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-lg-3">
@@ -472,9 +456,7 @@
                                                 </th:block>
                                             </select>
                                         </div>
-                                        <div class="col-lg-2">
-                                            <button onclick="openCam()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -493,9 +475,7 @@
                                                     </th:block>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openChip()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-lg-3">
@@ -510,9 +490,7 @@
                                                 </select>
 
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openRam()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-lg-3">
@@ -540,9 +518,7 @@
                                                     </th:block>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button onclick="openPin()"  type="button" class="btn-blue-grey"><i class="bi bi-plus"></i></button>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -609,7 +585,7 @@
 
 
 <!--    modal edit chi tiết-->
-    <div id="modal-edit-product-detail" class="modal fade show" style="display: block;" tabindex="-1" aria-hidden="true">
+    <div id="modal-edit-product-detail" class="modal fade show modal-edit-product-detail" style="display: block;" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
