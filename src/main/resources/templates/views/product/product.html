@@ -151,12 +151,12 @@
                                     class="d-block d-md-none"><i class="mdi mdi-home-variant h5"></i></span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#description-product" role="tab">
-                                <span class="d-none d-md-block">Mô tả chi tiết sản phẩm</span><span
-                                    class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>
-                            </a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" data-bs-toggle="tab" href="#description-product" role="tab">-->
+<!--                                <span class="d-none d-md-block">Mô tả chi tiết sản phẩm</span><span-->
+<!--                                    class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>-->
+<!--                            </a>-->
+<!--                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#image-product-add" role="tab">
                                 <span class="d-none d-md-block">Hình ảnh sản phẩm</span><span
@@ -373,12 +373,12 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#description-product-edit" role="tab">
-                                <span class="d-none d-md-block">Mô tả chi tiết sản phẩm</span><span
-                                    class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>
-                            </a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" data-bs-toggle="tab" href="#description-product-edit" role="tab">-->
+<!--                                <span class="d-none d-md-block">Mô tả chi tiết sản phẩm</span><span-->
+<!--                                    class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>-->
+<!--                            </a>-->
+<!--                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#image-product-edit" role="tab">
                                 <span class="d-none d-md-block">Hình ảnh sản phẩm</span><span
@@ -1168,11 +1168,11 @@
             }
 
             // validate mô tả chi tiết sản phẩm
-            if (productDescription === null || productDescription === undefined || productDescription === '') {
-                console.log('Vui lòng nhập mô tả chi tiết sản phẩm');
-                toastDanger('Lỗi', 'Vui lòng nhập mô tả chi tiết sản phẩm');
-                return;
-            }
+            // if (productDescription === null || productDescription === undefined || productDescription === '') {
+            //     console.log('Vui lòng nhập mô tả chi tiết sản phẩm');
+            //     toastDanger('Lỗi', 'Vui lòng nhập mô tả chi tiết sản phẩm');
+            //     return;
+            // }
 
             // validate hình ảnh sản phẩm
             if (productImages === null || productImages === undefined || productImages.length === 0) {
@@ -1192,7 +1192,7 @@
             return {
                 "nameProduct": productName,
                 "categoryId" : productCategory,
-                "note": productDescription,
+                "note": "Mô tả sản phẩm",
                 "image": productImages,
                 "attributeRequestAdd": {
                     "operatingSystem" : getElementProductOs,
