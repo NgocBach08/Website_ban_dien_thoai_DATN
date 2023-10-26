@@ -60,7 +60,7 @@
             <div class="row justify-content-end">
                 <a href="#modalAddOrderInvoice" type="button"
                    class="btn btn-primary col-auto mb-3 waves-effect waves-light"
-                   data-bs-toggle="modal">
+                   data-bs-toggle="modal" onclick="$('#modalAddOrderInvoice').modal('show');">
                     <i class="fas fa-plus me-2"></i>
                     Đặt NCC
                 </a>
@@ -93,7 +93,7 @@
                                         <a th:if="${orderInvoice.status != 2 && orderInvoice.status != 3}"
                                            href="#modalEditOrderInvoice" class="btn btn-info btn-sm"
                                            th:data-id="${orderInvoice.id}"
-                                           data-bs-toggle="modal" onclick="onClickEditOrderInvoice(this)">
+                                           data-bs-toggle="modal" onclick="onClickEditOrderInvoice(this); $('#modalEditOrderInvoice').modal('show');">
                                             Chi tiết
                                         </a>
                                         <a th:if="${orderInvoice.status == 2 || orderInvoice.status == 3}"
@@ -427,7 +427,6 @@
     <script th:src="@{/assets/js/spectrum.min.js}"></script>
     <script th:src="@{/assets/js/bootstrap-maxlength.min.js}"></script>
     <script th:src="@{/assets/js/jquery.bootstrap-touchspin.min.js}"></script>
-    <script th:src="@{/assets/js/select2.min.js}"></script>
     <script th:src="@{/assets/js/form-advanced.init.js}"></script>
     <script>
         function onStatusChange(element) {

@@ -70,7 +70,7 @@
                                     <th>Ảnh sản phẩm</th>
                                     <th>Chức năng</th>
                                     <th>Tên sản phẩm</th>
-                                    <th>Trạng thái</th>
+<!--                                    <th>Trạng thái</th>-->
 <!--                                    <th>Người thêm</th>-->
 <!--                                    <th>Ngày thêm</th>-->
 
@@ -100,16 +100,16 @@
                                             <label th:for="${'for-' + product.id}"
                                                    th:text="${product.getNameProduct()}"></label>
                                         </td>
-                                        <td class="text-center">
-                                            <span th:if="${product.status != null && product.status == 'ON'}"
-                                                  class="badge bg-success">
-                                                Kinh doanh
-                                            </span>
-                                            <span th:if="${product.status != null && product.status == 'OFF'}"
-                                                  class="badge bg-danger">
-                                                Ngừng kinh doanh
-                                            </span>
-                                        </td>
+<!--                                        <td class="text-center">-->
+<!--                                            <span th:if="${product.status != null && product.status == 'ON'}"-->
+<!--                                                  class="badge bg-success">-->
+<!--                                                Kinh doanh-->
+<!--                                            </span>-->
+<!--                                            <span th:if="${product.status != null && product.status == 'OFF'}"-->
+<!--                                                  class="badge bg-danger">-->
+<!--                                                Ngừng kinh doanh-->
+<!--                                            </span>-->
+<!--                                        </td>-->
 <!--                                        <td th:text="${product.create_By}" class="text-center">Người thêm</td>-->
 <!--                                        <td th:text="${#dates.format(product.create_Date, 'dd-MM-yyyy')}"-->
 <!--                                            class="text-center">-->
