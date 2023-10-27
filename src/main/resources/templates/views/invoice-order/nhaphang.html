@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý nhập hàng - World Phone</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-datepicker.min.css}">
     <link rel="stylesheet" th:href="@{/assets/css/select2.min.css}">
 </head>
 <body>
@@ -30,7 +31,7 @@
         </div>
         <div class="col-lg-10" id="rightKH" style="height: 100%">
             <div class="row justify-content-end">
-                <a href="#modal-add-invoice" type="button"
+                <a href="#modal-add-invoice" type="button" onclick="$('#modal-add-invoice').modal('show');"
                    class="btn btn-primary col-auto mb-3 waves-effect waves-light"
                    data-bs-toggle="modal" >
                     <i class="fas fa-plus me-2"></i>
@@ -65,7 +66,7 @@
                                     <td class="text-center">
                                         <a href="#modal-edit-invoice" class="btn btn-info btn-sm"
                                            th:data-id="${invoice.id}"
-                                           data-bs-toggle="modal" onclick="onClickEditInvoice(this)">
+                                           data-bs-toggle="modal" onclick="onClickEditInvoice(this); $('#modal-edit-invoice').modal('show');">
                                             Chi tiết
                                         </a>
                                     </td>
@@ -198,7 +199,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
-                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                <table class="table table-editable table-nowrap align-middle">
                                     <thead>
                                     <tr class="text-center">
                                         <th>Sản phẩm</th>
@@ -208,7 +209,7 @@
                                         <th>Số lượng nhập</th>
                                         <th>Giá tiền nhập sản phẩm</th>
                                         <th>Ghi chú chi tiết</th>
-                                        <th>Trạng thái sản phẩm</th>
+                                        <th hidden>Trạng thái sản phẩm</th>
                                     </tr>
                                     </thead>
                                     <tbody id="bodyAddProduct">
@@ -238,11 +239,9 @@
                                                    placeholder="Ghi chú...." class="form-control"/>
                                         </td>
 
-                                        <td class="add-product1-trang-thai">
+                                        <td class="add-product1-trang-thai" hidden>
                                             <select   class="form-control">
-                                                <option  value="1">Đang nhập</option>
                                                 <option  value="2">Đã nhập</option>
-                                                <option value="3">NCC hết hàng</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -356,7 +355,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="table-responsive" style="overflow-y: auto; max-height: 60vh">
-                                <table class="table table-editable table-nowrap align-middle table-edits">
+                                <table class="table table-editable table-nowrap align-middle ">
                                     <thead>
                                     <tr class="text-center">
                                         <th>Sản phẩm</th>
@@ -366,7 +365,7 @@
                                         <th>Số lượng nhập</th>
                                         <th>Giá tiền nhập sản phẩm</th>
                                         <th>Ghi chú chi tiết</th>
-                                        <th>Trạng thái sản phẩm</th>
+                                        <th hidden>Trạng thái sản phẩm</th>
                                     </tr>
                                     </thead>
                                     <tbody id="bodyEditProduct">
@@ -396,11 +395,9 @@
                                                    placeholder="Ghi chú...." class="form-control"/>
                                         </td>
 
-                                        <td class="edit-product1-trang-thai">
+                                        <td class="edit-product1-trang-thai" hidden>
                                             <select   class="form-control">
-                                                <option  value="1">Đang nhập</option>
                                                 <option  value="2">Đã nhập</option>
-                                                <option value="3">NCC hết hàng</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -484,13 +481,17 @@
     <select hidden id="rom" class="form-control">
         <option hidden id="data" value="0"> 0 </option>
     </select>
-
-
-
-
+</div>
+<div layout:fragment="script">
+    <script th:src="@{/assets/js/invoice_008.js}"></script>
+    <script th:src="@{/assets/js/spectrum.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap-maxlength.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.bootstrap-touchspin.min.js}"></script>
+    <script th:src="@{/assets/js/form-advanced.init.js}"></script>
 
 
     <script>
+
         function onChangeFilerSupplier(e) {
             let value = e.value;
             if (value === '') {
@@ -663,16 +664,6 @@
             e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
         }
     </script>
-</div>
-<div layout:fragment="script">
-    <script th:src="@{/assets/js/invoice_008.js}"></script>
-    <script th:src="@{/assets/js/table-edits.min.js}"></script>
-    <script th:src="@{/assets/js/spectrum.min.js}"></script>
-    <script th:src="@{/assets/js/bootstrap-maxlength.min.js}"></script>
-    <script th:src="@{/assets/js/jquery.bootstrap-touchspin.min.js}"></script>
-    <script th:src="@{/assets/js/select2.min.js}"></script>
-    <script th:src="@{/assets/js/form-advanced.init.js}"></script>
-    <!--    <script th:src="@{/assets/js/table-editable.init.js}"></script>-->
 </div>
 </body>
 </html>
