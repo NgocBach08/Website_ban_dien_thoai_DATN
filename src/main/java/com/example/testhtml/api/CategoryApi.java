@@ -16,12 +16,12 @@ public class CategoryApi {
     private final ICategoryService categoryService;
 
 
-//    @PostMapping
-//    public String saveCategory(@RequestBody CategoryReqDto categoryDto){
-//        System.out.println(categoryDto.toString());
-//        categoryService.saveCategory(categoryDto);
-//        return "";
-//    }
+    @PostMapping
+    public String saveCategory(@RequestBody CategoryReqDto categoryDto){
+        System.out.println(categoryDto.toString());
+        categoryService.saveCategory(categoryDto);
+        return "";
+    }
 
     @PutMapping
     public String updateCategory(@RequestBody CategoryDTO categoryDto){
