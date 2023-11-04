@@ -28,10 +28,10 @@ public class ImeiApi {
     private ImeiService service;
 
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> index(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(imeiRepo.findByDeleteFlagIsFalseAndPropertyProductId(id));
-    }
+//    @GetMapping("{id}")
+//    public ResponseEntity<?> index(@PathVariable("id") Long id){
+//        return ResponseEntity.ok().body(imeiRepo.findByDeleteFlagIsFalseAndPropertyProductId(id));
+//    }
 
     @GetMapping("{id}/{order}")
     public ResponseEntity<?> findImeiDaBan(@PathVariable("id") Long id, @PathVariable("order") Long order){
