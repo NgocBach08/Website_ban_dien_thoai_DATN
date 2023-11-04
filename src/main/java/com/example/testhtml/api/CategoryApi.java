@@ -29,14 +29,14 @@ public class CategoryApi {
         categoryService.updateCategory(categoryDto);
         return "";
     }
-//@PutMapping
-//public ResponseEntity<?> updateCategory(@RequestBody CategoryDTO request) {
-//    String status = categoryService.updateCategory(request);
-//    if (status.equalsIgnoreCase("ok")) {
-//        return ResponseEntity.ok().body(request);
-//    }
-//    return ResponseEntity.badRequest().body(request);
-//}
+@PutMapping
+public ResponseEntity<?> updateCategory(@RequestBody CategoryDTO request) {
+    String status = categoryService.updateCategory(request);
+    if (status.equalsIgnoreCase("ok")) {
+        return ResponseEntity.ok().body(request);
+    }
+    return ResponseEntity.badRequest().body(request);
+}
 
 
     @GetMapping("/{categoryId}")
