@@ -12,13 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 29/07/2022
- * Project_name: com.example.testhtml.controller
- */
 
 @Controller
 @RequestMapping("/promotion")
@@ -31,7 +24,7 @@ public class PromotionController {
 
 
     @GetMapping()
-    public String getAll(Model model){
+    public String getAll(Model model) {
         List<PromotionResponseDTO> promotionList = service.getAll();
 
         model.addAttribute("promotions", promotionList);
