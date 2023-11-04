@@ -23,7 +23,12 @@ public class CategoryApi {
         return "";
     }
 
-
+    @PutMapping
+    public String updateCategory(@RequestBody CategoryDTO categoryDto){
+        System.out.println(categoryDto.toString());
+        categoryService.updateCategory(categoryDto);
+        return "";
+    }
 //@PutMapping
 //public ResponseEntity<?> updateCategory(@RequestBody CategoryDTO request) {
 //    String status = categoryService.updateCategory(request);
