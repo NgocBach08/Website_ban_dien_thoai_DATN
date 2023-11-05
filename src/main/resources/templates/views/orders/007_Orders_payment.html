@@ -1512,47 +1512,51 @@
             contentType: 'application/json',
             success: function (res) {
                 console.log(res);
-                $.ajax({
-                    url: '/api/imei/' + idProduct +'/' + idDetail,
-                    type: 'GET',
-                    contentType: 'application/json',
-                    success: function (res1) {
-                        var arrOpt = [];
-                        if(res1.length === 0 && res.length === 0){
-                            toastDanger("Thất bại" , "Sản phẩm này chưa có imei")
-                            return;
-                        }else {
-                            let  colorData = document.getElementById("imeiOption");
-                            for (let z = 0; z < res.length; z++){
-                                let colorDataClone = colorData.cloneNode(true);
-                                colorDataClone.value = res[z].id;
-                                colorDataClone.innerText = res[z].value;
-                                colorDataClone.removeAttribute("id");
-                                colorDataClone.removeAttribute("hidden");
-                                selectImei.appendChild(colorDataClone);
-
-                            }
-                            for (let z = 0; z < res1.length; z++){
-                                let colorDataClone = colorData.cloneNode(true);
-                                colorDataClone.value = res1[z].id;
-                                arrOpt.push(res1[z].id)
-                                colorDataClone.innerText = res1[z].value;
-                                colorDataClone.removeAttribute("id");
-                                colorDataClone.removeAttribute("hidden");
-                                selectImei.appendChild(colorDataClone);
-                            }
-                            $('#imei_select').val(arrOpt).change();
-                            $('#imei_select').prop('disabled', false).trigger("chosen:updated");
-                            $('.typeFilterImei').chosen();
+                if (idDetail !== undefined || idDetail !== null || idDetail != "") {
+                    $.ajax({
+                        url: '/api/imei/' + idProduct +'/' + idDetail,
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (res1) {
                             console.log(res1)
-                            modalIMEI.modal('show');
-                        }
+                            var arrOpt = [];
+                            if(res1.length === 0 && res.length === 0){
+                                toastDanger("Thất bại" , "Sản phẩm này chưa có imei")
+                                return;
+                            }else {
+                                let  colorData = document.getElementById("imeiOption");
+                                for (let z = 0; z < res.length; z++){
+                                    let colorDataClone = colorData.cloneNode(true);
+                                    colorDataClone.value = res[z].id;
+                                    colorDataClone.innerText = res[z].value;
+                                    colorDataClone.removeAttribute("id");
+                                    colorDataClone.removeAttribute("hidden");
+                                    selectImei.appendChild(colorDataClone);
 
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
+                                }
+                                for (let z = 0; z < res1.length; z++){
+                                    let colorDataClone = colorData.cloneNode(true);
+                                    colorDataClone.value = res1[z].id;
+                                    arrOpt.push(res1[z].id)
+                                    colorDataClone.innerText = res1[z].value;
+                                    colorDataClone.removeAttribute("id");
+                                    colorDataClone.removeAttribute("hidden");
+                                    selectImei.appendChild(colorDataClone);
+                                }
+                                $('#imei_select').val(arrOpt).change();
+                                $('#imei_select').prop('disabled', false).trigger("chosen:updated");
+                                $('.typeFilterImei').chosen();
+                                console.log(res1)
+                                modalIMEI.modal('show');
+                            }
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+
 
 
 

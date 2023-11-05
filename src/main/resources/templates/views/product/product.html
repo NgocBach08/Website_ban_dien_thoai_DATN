@@ -111,11 +111,11 @@
                                         </td>
                                         <td class="text-center">
                                             <span th:if="${product.status != null && product.status == 'ON'}"
-                                                  class="badge bg-success">
+                                                  >
                                                 Kinh doanh
                                             </span>
                                             <span th:if="${product.status != null && product.status == 'OFF'}"
-                                                  class="badge bg-danger">
+                                                  >
                                                 Ngừng kinh doanh
                                             </span>
                                         </td>
@@ -1459,9 +1459,7 @@
 
                         }
                     }
-                    if(!checkDetail){
-                        document.getElementById("updateDetail").style.display = "none";
-                    }
+                    document.getElementById("updateDetail").style.display = "none";
                     if (getElementProductName !== null) {
                         getElementProductName.value = data.nameProduct;
                     }
@@ -1516,6 +1514,7 @@
                     }
 
                     CKEDITOR.instances['productEditDescription'].setData(data.note);
+                    document.getElementById("updateDetail").style.display = "none";
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 
