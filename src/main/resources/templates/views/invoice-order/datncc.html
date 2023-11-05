@@ -108,15 +108,15 @@
                                     <td th:text="${orderInvoice.receiveDate}"></td>
                                     <td>
                                         <span th:if="${orderInvoice.status == 1}"
-                                              class="badge bg-success">Đã đặt</span>
+                                              >Đã đặt</span>
                                         <span th:if="${orderInvoice.status == 0}"
-                                              class="badge bg-danger">Đã huỷ</span>
+                                             >Đã huỷ</span>
                                         <span th:if="${orderInvoice.status == 2}"
-                                              class="badge bg-purple">Đã nhận</span>
+                                             >Đã nhận</span>
                                         <span th:if="${orderInvoice.status == -1}"
-                                              class="badge bg-orange">Đợi duyệt</span>
+                                             >Đợi duyệt</span>
                                         <span th:if="${orderInvoice.status == 3}"
-                                              class="badge bg-brown">Giao chưa đủ</span>
+                                            >Giao chưa đủ</span>
                                     </td>
                                 </tr>
                                 </tbody>
