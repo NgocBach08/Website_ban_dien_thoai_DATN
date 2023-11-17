@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AccountApi {
 
-
-
     private final StaffServiceImpl staffService;
 
     private String message;
