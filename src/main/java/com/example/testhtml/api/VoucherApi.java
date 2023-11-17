@@ -38,12 +38,12 @@ public class VoucherApi {
         if (errors.hasErrors()) {
             throw new WorldPhoneExp(errors.getFieldErrors().get(0).getDefaultMessage());
         }
-        if (checkEqualLength(voucherRequest.getVoucherCode(), 5, 50)) {
-            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Mã giảm giá", 5, 50);
-        }
-        if (checkEqualLength(voucherRequest.getVoucherName(), 5, 255)) {
-            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Tên chương trình", 5, 255);
-        }
+//        if (checkEqualLength(voucherRequest.getVoucherCode(), 5, 50)) {
+//            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Mã giảm giá", 5, 50);
+//        }
+//        if (checkEqualLength(voucherRequest.getVoucherName(), 5, 255)) {
+//            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Tên chương trình", 5, 255);
+//        }
         voucherRequest.setVoucherCode(voucherRequest.getVoucherCode().toLowerCase());
         if (!voucherService.findAllByCode(voucherRequest.getVoucherCode()).isEmpty()) {
             throw new WorldPhoneExp(ConstansErrorCode.ERROR_EXISTS, "Mã giảm giá");
