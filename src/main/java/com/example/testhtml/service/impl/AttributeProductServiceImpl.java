@@ -10,13 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 06/07/2022
- * Project_name: com.example.testhtml.service.impl
- */
+
 @Service
 @Slf4j
 @RequiredArgsConstructor

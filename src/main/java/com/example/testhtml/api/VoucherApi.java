@@ -22,7 +22,6 @@ import static com.example.testhtml.type.CustomerStatus.SUCCESS;
 
 
 
-
 @RestController
 @RequestMapping("/api/voucher")
 @RequiredArgsConstructor

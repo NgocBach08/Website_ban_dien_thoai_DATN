@@ -8,13 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 07/07/2022
- * Project_name: com.example.testhtml.controller.attribute
- */
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("rom")
