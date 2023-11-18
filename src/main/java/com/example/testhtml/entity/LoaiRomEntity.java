@@ -3,13 +3,7 @@ package com.example.testhtml.entity;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 05/10/2022
- * Project_name: com.example.testhtml.entity
- */
+
 @Entity
 @Table(name = "loai_rom", schema = "world_phone", catalog = "")
 public class LoaiRomEntity extends BaseEntity{

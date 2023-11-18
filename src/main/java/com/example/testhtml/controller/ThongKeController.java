@@ -9,13 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 03/12/2022
- * Project_name: com.example.testhtml.controller
- */
+
 @Controller
 public class ThongKeController {
 

@@ -6,13 +6,7 @@ import com.example.testhtml.dto.respone.order.OrderRespone;
 import java.text.ParseException;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 22/08/2022
- * Project_name: com.example.testhtml.service
- */
+
 public interface IOrderService {
     List<OrderRespone> findAllOrder();
 

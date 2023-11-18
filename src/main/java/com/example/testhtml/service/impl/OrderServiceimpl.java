@@ -21,13 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 22/08/2022
- * Project_name: com.example.testhtml.service.impl
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

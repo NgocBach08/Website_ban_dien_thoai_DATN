@@ -8,13 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Description:
- *
- * @author: GMO_ThanhND
- * @version: 1.0
- * @since 1/24/2022 10:49 PM
- */
+
 
 @Service
 public class CookieUtil {

@@ -4,13 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 10/08/2022
- * Project_name: com.example.word_phone_web.entity
- */
+
 
 @Entity
 @Table(name = "orders", schema = "world_phone", catalog = "")

@@ -18,13 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 29/07/2022
- * Project_name: com.example.testhtml.service.impl
- */
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
