@@ -7,13 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 22/10/2022
- * Project_name: com.example.testhtml.repo
- */
+
 @Repository
 public interface ImeiRepo extends JpaRepository<ImeiEntity, Long> {
     @Query("select count(o) from ImeiEntity o where o.deleteFlag = false and o.propertyProductId = ?1 and o.status = '0'")

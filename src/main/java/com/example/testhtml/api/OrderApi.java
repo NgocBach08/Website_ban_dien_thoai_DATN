@@ -14,13 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 24/08/2022
- * Project_name: com.example.testhtml.api
- */
+
 @RestController
 @RequestMapping("api/orders")
 @RequiredArgsConstructor

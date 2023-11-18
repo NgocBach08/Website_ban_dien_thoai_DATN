@@ -4,13 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 24/08/2022
- * Project_name: com.example.testhtml.dto.respone.order_detail
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

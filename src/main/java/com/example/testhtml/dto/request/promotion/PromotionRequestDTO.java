@@ -8,13 +8,7 @@ import lombok.ToString;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 29/07/2022
- * Project_name: com.example.testhtml.dto.request.promotion
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

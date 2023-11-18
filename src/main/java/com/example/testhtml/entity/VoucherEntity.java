@@ -6,11 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * @author DucBV
- * @version 1.0
- * @since 8.3.2022
- */
+
 @Entity
 @Table(name = "voucher", schema = "world_phone", catalog = "")
 @Builder(toBuilder = true)
