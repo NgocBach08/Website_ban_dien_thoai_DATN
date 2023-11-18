@@ -2,13 +2,7 @@ package com.example.testhtml.entity;
 
 import javax.persistence.*;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 29/06/2022
- * Project_name: IntelliJ IDEA
- */
+
 
 @Entity
 @Table(name = "cam", schema = "world_phone", catalog = "")

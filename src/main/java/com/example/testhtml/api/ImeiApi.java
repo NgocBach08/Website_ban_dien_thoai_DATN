@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 27/10/2022
- * Project_name: com.example.testhtml.api
- */
+
 @RestController
 @RequestMapping("/api/imei")
 @RequiredArgsConstructor

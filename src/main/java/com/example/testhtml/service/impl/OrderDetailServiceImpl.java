@@ -9,13 +9,7 @@ import com.example.testhtml.service.IOrderDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 06/09/2022
- * Project_name: com.example.testhtml.service.impl
- */
+
 @Service
 @RequiredArgsConstructor
 public class OrderDetailServiceImpl implements IOrderDetailService {

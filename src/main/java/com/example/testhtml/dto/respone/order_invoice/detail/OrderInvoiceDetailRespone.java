@@ -5,13 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 29/06/2022
- * Project_name: com.example.testhtml.dto.respone.order_invoice.detail
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

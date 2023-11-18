@@ -4,13 +4,7 @@ import com.example.testhtml.dto.respone.ThongKeDto;
 
 import javax.persistence.*;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 10/08/2022
- * Project_name: com.example.word_phone_web.entity
- */
+
 
 @Entity
 @Table(name = "ordersdetail", schema = "world_phone", catalog = "")

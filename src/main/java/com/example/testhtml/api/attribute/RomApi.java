@@ -7,13 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 07/07/2022
- * Project_name: com.example.testhtml.api.attribute
- */
+
 
 @RestController
 @RequestMapping("/api/rom")

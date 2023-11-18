@@ -1,12 +1,6 @@
 package com.example.testhtml.common;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 11/10/2022
- * Project_name: com.example.testhtml.common
- */
+
 public enum StatusOrderInvoice {
     HUY(0),
     DOI_DUYET(-1),

@@ -9,13 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: hieu
- * @since: 31/07/2022
- * Project_name: com.example.testhtml.scheduing
- */
+
 @Component
 @Slf4j
 public class PromotionJob {
