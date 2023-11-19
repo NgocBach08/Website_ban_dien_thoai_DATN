@@ -73,6 +73,10 @@ public class ProductServiceImpl implements IProductService {
             return String.valueOf(new WorldPhoneExp(ConstansErrorCode.ROM_NOT_EXIST).getErrorMessage().getVn());
         }
         ProductEntity entity = mapToRequest(requestProduct);
+        java.util.Date now = new java.util.Date();
+
+        entity.setCreateDate(new Timestamp(now.getTime()));
+
         entity.setStatus(StatusProduct.NGUNG_KINH_DOANH.getStatus());
         entity = productRepo.save(entity);
         if(!attributeProductService.saveAttribute(requestProduct.getAttributeRequestAdd(), entity.getId()).equals("ok")){
