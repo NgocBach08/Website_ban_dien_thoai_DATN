@@ -51,9 +51,6 @@ public class AttributeProductServiceImpl implements AttributeProductService {
         entity.setRamID(Long.valueOf(requestAdd.getRam()));
         entity.setScreenId(Long.valueOf(requestAdd.getScreen()));
         entity.setProductId(productId);
-        java.util.Date now = new java.util.Date();
-
-        entity.setCreateDate(new Timestamp(now.getTime()));
        try {
            repo.save(entity);
        }catch (Exception e){

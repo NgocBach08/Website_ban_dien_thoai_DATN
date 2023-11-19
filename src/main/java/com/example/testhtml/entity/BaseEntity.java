@@ -24,11 +24,11 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(name = "CREATE_DATE")
-    private Timestamp createDate;
+    private Timestamp createDate = new Timestamp(new java.util.Date().getTime());
 
     @LastModifiedDate
     @Column(name = "MODIFIER_DATE")
-    private Timestamp modifierDate;
+    private Timestamp modifierDate = new Timestamp(new java.util.Date().getTime());
 
     @CreatedBy
     @Column(name = "CREATE_BY")
