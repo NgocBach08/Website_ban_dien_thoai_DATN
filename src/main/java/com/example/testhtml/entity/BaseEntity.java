@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(name = "create_date")
+    @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
     @LastModifiedDate
