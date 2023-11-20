@@ -29,4 +29,6 @@ public interface ImeiRepo extends JpaRepository<ImeiEntity, Long> {
 
     @Query("select o from ImeiEntity o where o.deleteFlag = false and o.id = ?1")
     ImeiEntity findByIdAndDeleteFlagIsFalse(Long id);
+
+    List<ImeiEntity> findByOrderDetailIdAndPropertyProductId(Long orderId, Long product);
 }

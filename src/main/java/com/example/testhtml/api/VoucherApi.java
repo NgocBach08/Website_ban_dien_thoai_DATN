@@ -85,12 +85,12 @@ public class VoucherApi {
             }
         }
         voucherRequest.setVoucherCode(voucherRequest.getVoucherCode().toLowerCase());
-        if (checkEqualLength(voucherRequest.getVoucherCode(), 5, 50)) {
-            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Mã giảm giá", 5, 50);
-        }
-        if (checkEqualLength(voucherRequest.getVoucherName(), 10, 255)) {
-            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Tên chương trình", 10, 255);
-        }
+//        if (checkEqualLength(voucherRequest.getVoucherCode(), 5, 50)) {
+//            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Mã giảm giá", 5, 50);
+//        }
+//        if (checkEqualLength(voucherRequest.getVoucherName(), 10, 255)) {
+//            throw new WorldPhoneExp(ConstansErrorCode.ERROR_LENGTH, "Tên chương trình", 10, 255);
+//        }
         try {
             if (ConvertUtil.get().strToDate(voucherRequest.getVoucherEndDate(), patternDate).compareTo(new Date()) < 0) {
                 throw new WorldPhoneExp(ConstansErrorCode.VOUCHER_DATE_NOT_PAST);

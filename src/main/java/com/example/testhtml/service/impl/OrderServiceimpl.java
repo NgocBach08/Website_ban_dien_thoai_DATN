@@ -244,11 +244,11 @@ public class OrderServiceimpl implements IOrderService {
             if(propertyEntity.getQuantity() - detail.getQuantity() < 0){
                 return "Sản phẩm đang hết hàng";
             }else {
-                propertyEntity.setQuantity(propertyEntity.getQuantity() - detail.getQuantity());
-                if(propertyEntity.getQuantity() == 0){
-                    propertyEntity.setStatus("OFF");
-                }
-                propertyProductRepo.save(propertyEntity);
+                //propertyEntity.setQuantity(propertyEntity.getQuantity() - detail.getQuantity());
+//                if(propertyEntity.getQuantity() == 0){
+//                    propertyEntity.setStatus("OFF");
+//                }
+//                propertyProductRepo.save(propertyEntity);
             }
         }
         ordersRepo.save(entity);
@@ -310,6 +310,11 @@ public class OrderServiceimpl implements IOrderService {
     @Override
     public String deleteOrder(String request) {
         OrdersEntity ordersEntity = ordersRepo.findByCodeOrderAndDeleteFlagIsFalse(request);
+        if (ordersEntity.getVoucherID() != null) {
+            VoucherEntity voucherEntity = voucherRepo.findById(String.valueOf(ordersEntity.getVoucherID())).get();
+            voucherEntity.setQuantity(voucherEntity.getQuantity() + 1);
+            voucherRepo.save(voucherEntity);
+        }
         ordersEntity.setStatus(String.valueOf(StatusOrder.HUY.getIndex()));
         ordersRepo.save(ordersEntity);
         List<OrdersDetailEntity> list = ordersDetailRepo.findByDeleteFlagIsFalseAndOrdersEntity(ordersEntity);
