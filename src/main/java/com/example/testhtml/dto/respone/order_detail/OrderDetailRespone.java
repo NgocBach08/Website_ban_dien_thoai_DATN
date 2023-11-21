@@ -18,8 +18,8 @@ public class OrderDetailRespone {
     private String quantity;
     private String tonKho;
     private String giaBanString;
-    private long giaBan;
+    private Long giaBan;
     private String tongTienString;
     private String statusProduct;
-    private long tongTien;
+    private Long tongTien;
 }

@@ -69,6 +69,13 @@ public interface ConstansErrorCode {
 
     String ERROR_NOT_EXISTS = "CM-WP-008";
 
+    String CUSTOMER_NOT_EXIST = "TC-004-003";
+
+    String PHONE_NUMBER_EXIST = "TC-000-003";
+    String EMAIL_EXIST = "TC-000-004";
+    String CUSTOMER_EXIST = "TC-004-002";
+
+
 
 
 
