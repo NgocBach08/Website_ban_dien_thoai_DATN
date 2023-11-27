@@ -68,6 +68,7 @@ public class OrderServiceimpl implements IOrderService {
         CustomerEntity customerEntity = customerRepo.getById(entity.getCustomerEntity().getId());
         List<OrdersDetailEntity> ordersDetailEntities = ordersDetailRepo.findByDeleteFlagIsFalseAndOrdersEntity(entity);
         List<OrderDetailRespone> orderDetailRespones = new ArrayList<>();
+        Long tongTien = 0L;
         for (OrdersDetailEntity detail: ordersDetailEntities
              ) {
             OrderDetailRespone detailRespone = new OrderDetailRespone();
@@ -86,6 +87,7 @@ public class OrderServiceimpl implements IOrderService {
             detailRespone.setTonKho(String.valueOf(propertyEntity.getQuantity()));
             detailRespone.setTongTienString(convertUtil.moneyToStringFormat(detail.getPrice()* detail.getQuantity()) );
             detailRespone.setTongTien(detail.getPrice()* detail.getQuantity());
+            tongTien+=detailRespone.getTongTien();
             detailRespone.setStatusProduct(propertyEntity.getQuantity() == 0 ? "0" : "1");
             orderDetailRespones.add(detailRespone);
 
@@ -113,6 +115,10 @@ public class OrderServiceimpl implements IOrderService {
        if(entity.getVoucherID() != null){
            VoucherEntity voucherEntity = voucherRepo.getByIdAndDeleteFlagIsFalse(String.valueOf(entity.getVoucherID()));
            respone.setVoucherName(voucherEntity.getName());
+           if (voucherEntity.getTypeDiscount().equals("%")) {
+               Long khuyenMai = tongTien / 100 * voucherEntity.getDiscount();
+               respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
+           }
        }
         return respone;
     }
@@ -129,12 +135,16 @@ public class OrderServiceimpl implements IOrderService {
             customerEntity.setFullName(request.getFullName());
             customerEntity = customerRepo.save(customerEntity);
         }
+
         long millis=System.currentTimeMillis();
         java.sql.Date date=new java.sql.Date(millis);
-        if(request.getVoucherId() != null && request.getVoucherId().length() > 0){
+        if(request.getVoucherId() != null && !request.getVoucherId().isEmpty()){
             voucherEntity = voucherRepo.getByEndDate(date,request.getVoucherId());
             if(voucherEntity == null){
                 return "Voucher không tồn tại";
+            }
+            if (voucherEntity.getQuantity() == 0) {
+                return "Voucher hết số lượng";
             }
         }
         OrdersEntity entity = new OrdersEntity();
@@ -171,8 +181,10 @@ public class OrderServiceimpl implements IOrderService {
             //propertyProductRepo.save(propertyEntity);
             ordersDetailRepo.save(detailEntity);
         }
-        if(request.getVoucherId() != null){
+
+        if(request.getVoucherId() != null && !request.getVoucherId().isEmpty()) {
             voucherEntity = voucherRepo.getByEndDate(date,request.getVoucherId());
+            voucherEntity.setQuantity(voucherEntity.getQuantity() - 1);
             if(voucherEntity != null){
                 entity.setVoucherID(Long.valueOf(voucherEntity.getId()));
                 if(voucherEntity.getTypeDiscount().equals("đ")){
@@ -181,6 +193,7 @@ public class OrderServiceimpl implements IOrderService {
                     tong = tong - (tong / 100) * voucherEntity.getDiscount();
                 }
             }
+            voucherRepo.save(voucherEntity);
         }
         entity.setTotalMoney(tong);
         ordersRepo.save(entity);

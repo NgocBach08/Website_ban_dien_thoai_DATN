@@ -4,7 +4,7 @@
       layout:decorate="~{layout/weblayout}"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Quản lý đơn hàng - WorldPhone</title>
+    <title>Quản lý đơn hàng - NIQ</title>
     <link rel="stylesheet" th:href="@{/assets/css/select2.min.css}">
 </head>
 
@@ -236,6 +236,27 @@
                                     <th><label for="price">Tổng thanh toán</label></th>
                                     <td><span id="price" class="ps-2 fw-bolder text-danger"></span></td>
                                 </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row px-3 order-detail1">
+
+                        <div class="col-lg-6">
+                            <h3>
+                                <span class="fw-bolder text-decoration-underline">Voucher</span>
+                                <!--                                <i id="btnSearchCustomer" class="fas fa-search waves-effect waves-light text-primary" onclick="$('.modal-add-customer').modal('show')" title="Tìm kiếm khách hàng" style="top: 5px;"></i>-->
+                            </h3>
+                            <table class="none-border buyer">
+                                <tr>
+                                    <th><label for="nameVoucher">Tên voucher</label></th>
+                                    <td><input id="nameVoucher" name="nameVoucher" class="ps-2 " disabled onblur="onType(this)"></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="giaKhuyenMai">Số tiền khuyến mãi</label></th>
+                                    <td><input id="giaKhuyenMai" name="giaKhuyenMai" disabled class="ps-2  text-primary text-decoration-underline" onblur="onType(this)"></td>
+                                </tr>
+
                             </table>
                         </div>
 
@@ -1621,10 +1642,11 @@
 
         $('#loading-image').show();
         // Hide Form input Info Go shipping
-        $('.modal-info-order .col-lg-4').removeClass('col-lg-4').addClass('col-lg-6');
-        $('.modal-info-order .col-lg-6:last').hide();
+         $('.modal-info-order .col-lg-4').removeClass('col-lg-4').addClass('col-lg-6');
+         $('.modal-info-order .col-lg-6:last').hide();
         $('.order-verify').removeClass('d-none');
         $('.order-imei').addClass('d-none');
+        $('.order-detail1').show();
         $('#fullName, #phoneNumber').addClass('border-none').attr('disabled', '');
         $('.list-order-fn').removeClass('d-none');
         btnSave.removeClass('btn-primary btn-warning btn-success btn-info').addClass('btn-primary');
@@ -1654,6 +1676,7 @@
             btnSave.find('span').text("Xác nhận");
             btnSave.removeClass('btn-primary btn-warning btn-danger btn-success btn-info btn-secondary').addClass('btn-danger');
         } else if ($(element).text() === "Xuất hàng") {
+            $('input[name=nameVoucher]').prop('disabled', true);
             btnEdit.show();
             btnSave.find('span').text("Xuất hàng");
             btnSave.removeClass('btn-primary btn-warning btn-success btn-info btn-secondary').addClass('btn-warning');
@@ -1667,9 +1690,9 @@
             btnSave.removeClass('btn-primary btn-warning btn-danger btn-success btn-info btn-secondary').addClass('btn-info');
 
             // Show Form input Info Go shipping
-            $('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
+            // $('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
             $('.modal-info-order .ship-info').removeClass('border-none');
-            $('.modal-info-order .col-lg-4:last').show();
+            $('.modal-info-order .col-lg-6:last').show();
 
             // remove unnecessary information
             btnAddProduct.hide();
@@ -1682,9 +1705,9 @@
             btnSave.removeClass('btn-primary btn-warning btn-danger btn-success btn-info btn-secondary').addClass('btn-primary');
 
             // Show Form input Info Go shipping
-            $('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
+            //$('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
             $('.modal-info-order .ship-info').addClass('border-none').attr('disabled', '');
-            $('.modal-info-order .col-lg-4:last').show();
+            $('.modal-info-order .col-lg-6:last').show();
 
             // remove unnecessary information
             btnAddProduct.hide();
@@ -1697,9 +1720,9 @@
             btnSave.attr('disabled', '');
 
             // Show Form input Info Go shipping
-            $('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
+            //$('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
             $('.modal-info-order .ship-info').addClass('border-none').attr('disabled', '');
-            $('.modal-info-order .col-lg-4:last').show();
+            $('.modal-info-order .col-lg-6:last').show();
 
             // remove unnecessary information
             btnEdit.hide();
@@ -1714,9 +1737,9 @@
             btnTempSave.hide();
 
             // Show Form input Info Go shipping
-            $('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
+            //$('.modal-info-order .col-lg-6').removeClass('col-lg-6').addClass('col-lg-4');
             $('.modal-info-order .ship-info').addClass('border-none').attr('disabled', '');
-            $('.modal-info-order .col-lg-4:last').show();
+           $('.modal-info-order .col-lg-6:last').show();
         }
 
         /**
@@ -1729,6 +1752,7 @@
             btnSwitch.parent().find('label').text('Tại quầy');
             btnSearchCustomer.show();
             $('#fullName, #phoneNumber').removeClass('border-none').removeAttr('disabled', '');
+            $('.order-detail1').hide();
             btnSave.find('span').text("Xác nhận đơn hàng");
             $('.inputVoucher').show();
             btnSave.removeClass('btn-primary btn-warning btn-danger btn-success btn-info btn-secondary').addClass('btn-primary');
@@ -1751,6 +1775,8 @@
                     $('.modal-info-order').find('h5>span').html(`Chi tiết hoá đơn <i>${orderId}</i>`);
                     $('#idOrder').val(orderId)
                     $('input[name=recipientName]').val(result.customerRespone.name);
+                    $('input[name=nameVoucher]').val(result.voucherName);
+                    $('input[name=giaKhuyenMai]').val(result.voucherGia);
                     $('input[name=recipientPhone]').val(result.customerRespone.phone);
                     $('textarea[name=recipientAddress]').val(result.address);
                      if (Number(result.shipping) === 0) {

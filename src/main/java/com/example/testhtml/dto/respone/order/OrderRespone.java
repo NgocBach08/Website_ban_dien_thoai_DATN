@@ -29,5 +29,6 @@ public class OrderRespone {
     private String note;
     private String voucherName;
     private String orderType;
+    private String voucherGia;
    }
 // shipping là trạng thái đơn hàng : 0 = chờ xác nhận , 1 = chờ xuất hàng, 2 = chờ giao hàng, 3 = đang giao hàng, 4 = hoàn thành, -1 = đơn hảng bị hủy
