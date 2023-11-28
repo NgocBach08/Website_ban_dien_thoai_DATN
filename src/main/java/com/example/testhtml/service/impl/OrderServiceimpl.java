@@ -114,13 +114,15 @@ public class OrderServiceimpl implements IOrderService {
         respone.setShipperName(entity.getNameShip());
        if(entity.getVoucherID() != null){
            VoucherEntity voucherEntity = voucherRepo.getByIdAndDeleteFlagIsFalse(String.valueOf(entity.getVoucherID()));
-           respone.setVoucherName(voucherEntity.getName());
-           if (voucherEntity.getTypeDiscount().equals("%")) {
-               Long khuyenMai = tongTien / 100 * voucherEntity.getDiscount();
-               respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
-           } else {
-               Long khuyenMai = tongTien - voucherEntity.getDiscount();
-               respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
+           if (voucherEntity != null) {
+               respone.setVoucherName(voucherEntity.getName());
+               if (voucherEntity.getTypeDiscount().equals("%")) {
+                   Long khuyenMai = tongTien / 100 * voucherEntity.getDiscount();
+                   respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
+               } else {
+                   Long khuyenMai = tongTien - voucherEntity.getDiscount();
+                   respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
+               }
            }
        }
         return respone;
