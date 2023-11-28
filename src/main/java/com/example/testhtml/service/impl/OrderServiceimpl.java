@@ -118,6 +118,9 @@ public class OrderServiceimpl implements IOrderService {
            if (voucherEntity.getTypeDiscount().equals("%")) {
                Long khuyenMai = tongTien / 100 * voucherEntity.getDiscount();
                respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
+           } else {
+               Long khuyenMai = tongTien - voucherEntity.getDiscount();
+               respone.setVoucherGia(convertUtil.moneyToStringFormat(khuyenMai));
            }
        }
         return respone;
