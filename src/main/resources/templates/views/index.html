@@ -58,6 +58,8 @@
             </div>
         </div>
     </div>
+    <br>
+    <h4 style="margin-left: 800px" id="tong"></h4>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx02 = document.getElementById('chartContainer');
@@ -167,6 +169,9 @@
                             '                                                <td>' + data.quantityDaBan + '</td>\n' +
 
                             '                                            </tr>'
+                    }
+                    if (datas.length > 0) {
+                        tong.innerHTML = 'Tổng số tiền bán được : ' + datas[0].total;
                     }
                 },
                 error: function (error) {

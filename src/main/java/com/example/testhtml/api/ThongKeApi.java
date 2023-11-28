@@ -2,6 +2,7 @@ package com.example.testhtml.api;
 
 import com.example.testhtml.dto.respone.ThongKeDto;
 import com.example.testhtml.repo.ThongKeRepo;
+import com.example.testhtml.until.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,21 @@ public class ThongKeApi {
     @Autowired
     private ThongKeRepo thongKeRepo;
 
+    @Autowired
+    private ConvertUtil convertUtil;
+
     @GetMapping("/top-product-sale/{month}/{year}")
     public List<ThongKeDto> thongKe(@PathVariable("month") Integer month, @PathVariable("year") Integer year){
-        return thongKeRepo.findStockAkhirPerProductIn(month, year);
+        List<ThongKeDto> a =  thongKeRepo.findStockAkhirPerProductIn(month, year);
+        Long tong = 0L;
+        for (ThongKeDto b : a) {
+            if (b.getPriceProduct() != null && b.getQuantityDaBan() != null) {
+                tong += (Long.valueOf(b.getPriceProduct()) * Long.valueOf(b.getQuantityDaBan()));
+            }
+        }
+        if (!a.isEmpty()) {
+            a.get(0).setTotal(convertUtil.moneyToStringFormat(tong));
+        }
+        return a;
     }
 }
