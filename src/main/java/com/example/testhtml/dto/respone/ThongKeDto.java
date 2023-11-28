@@ -16,4 +16,5 @@ public class ThongKeDto {
 
     private String priceProduct;
     private String quantityDaBan;
+    private String total;
 }

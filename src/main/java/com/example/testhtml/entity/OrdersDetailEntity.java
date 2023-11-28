@@ -11,12 +11,12 @@ import javax.persistence.*;
 @NamedNativeQuery(
         name = "thong_ke",
         query =
-                "select distinct  p.IMAGE_KEY as img, p.NAME as nameProduct, r.NAME as romProduct, c.value_color as colorProduct, pp.PRICE as priceProduct, SUM(o.QUANTITY) as quantityDaBan from orders a\n" +
+                "select distinct  p.IMAGE_KEY as img, p.NAME as nameProduct, r.NAME as romProduct, c.value_color as colorProduct, pp.PRICE as priceProduct, SUM(o.QUANTITY) as quantityDaBan, 0 as total from orders a\n" +
                         "inner join ordersdetail o on a.ID = o.ORDER_ID\n" +
                         "inner join property_product pp on o.PRODUCT_PROPERTY_ID = pp.ID\n" +
                         "inner join rom r on pp.ROM_ID = r.ID\n" +
                         "inner join color c on pp.COLOR_ID = c.ID\n" +
-                        "inner join product p on r.PRODUCT_ID = p.ID where o.DELETE_FLAG = false and MONTH(o.CREATE_DATE) = :month and YEAR(o.CREATE_DATE) = :year group by o.PRICE limit 10;\n",
+                        "inner join product p on r.PRODUCT_ID = p.ID where o.DELETE_FLAG = false and MONTH(o.CREATE_DATE) = :month and YEAR(o.CREATE_DATE) = :year group by o.PRICE ;\n",
         resultSetMapping = "stock_akhir_dto"
 )
 @SqlResultSetMapping(
@@ -29,7 +29,8 @@ import javax.persistence.*;
                         @ColumnResult(name = "romProduct", type = String.class),
                         @ColumnResult(name = "colorProduct", type = String.class),
                         @ColumnResult(name = "priceProduct", type = String.class),
-                        @ColumnResult(name = "quantityDaBan", type = String.class)
+                        @ColumnResult(name = "quantityDaBan", type = String.class),
+                        @ColumnResult(name = "total", type = String.class)
                 }
         )
 )

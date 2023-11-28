@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<footer th:fragment="footer" class="footer text-center shadow-top">
+<footer th:fragment="footer" class="footer text-center shadow-top" th:if="${test == null}">
   <script>
     document.write(new Date().getFullYear())
   </script>

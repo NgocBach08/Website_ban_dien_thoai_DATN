@@ -37,6 +37,7 @@ public class VoucherController {
         lstVoucher.sort(((o1, o2) -> o2.getVoucherCreateDate().compareTo(o1.getVoucherCreateDate())));
         model.addAttribute("lstVoucher", lstVoucher);
         model.addAttribute("lstCategory", lstCategory);
+        model.addAttribute("test", "test");
        // model.addAttribute("lstCustomer", lstCustomer);
         return "views/voucher/index";
     }
