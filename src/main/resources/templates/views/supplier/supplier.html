@@ -14,29 +14,7 @@
         <div class="col-lg-2 h-100" id="leftKH">
             <h1 class="heading-page">Nhà cung cấp</h1>
             <div class="card" id="formLeft">
-                <div style="">
-                    <h3 class="leftTitle">Trạng thái</h3>
-                    <div class="boxLeftC">
-                        <div class="form-group form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusAll" value="Tất cả" onchange="onStatusChange(this)" checked>
-                            <label class="form-check-label" for="statusAll">
-                                Tất cả
-                            </label>
-                        </div>
-                        <div class="form-group form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="Đang hoạt động" onchange="onStatusChange(this)">
-                            <label class="form-check-label" for="statusActive">
-                                Đang hoạt động
-                            </label>
-                        </div>
-                        <div class="form-group form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="Ngừng hoạt động" onchange="onStatusChange(this)">
-                            <label class="form-check-label" for="statusInactive">
-                                Ngừng hoạt động
-                            </label>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <!-- End-Sidebar -->
@@ -59,7 +37,6 @@
                         <th>Email</th>
                         <th>Địa chỉ</th>
                         <th>Ghi chú</th>
-                        <th>Trạng thái</th>
                         </thead>
                         <tbody style="vertical-align: middle;">
                         <tr th:each="supplier, iterator : ${list}">
@@ -79,10 +56,6 @@
                             <td th:text="${supplier.getEmail()}">Email</td>
                             <td th:text="${supplier.getAddress()}">Địa chỉ</td>
                             <td th:text="${supplier.getNote()}"></td>
-                            <td th:switch="${supplier.getStatus()}" class="text-center">
-                                <span th:case="1" class="status badge bg-success fs-6">Đang hoạt động</span>
-                                <span th:case="0" class="status badge bg-danger fs-6">Ngừng hoạt động</span>
-                            </td>
                         </tr>
                         </tbody>
                     </table>

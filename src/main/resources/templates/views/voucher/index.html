@@ -173,7 +173,7 @@
                                                                         </div><!-- input-group -->
                                                                     </div>
                                                                 </div>
-                                                                <div class="mb-3 row">
+                                                                <div hidden class="mb-3 row">
                                                                     <div class="col-lg-5">
                                                                         Số tiền hàng tối thiểu
                                                                     </div>
@@ -184,7 +184,7 @@
                                                                                th:value="${voucher.voucherMinAmount}"/>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mb-3 row">
+                                                                <div hidden class="mb-3 row">
                                                                     <div class="col-lg-5">
                                                                     </div>
                                                                     <div class="col-lg-7">
@@ -360,16 +360,16 @@
                                     </div><!-- input-group -->
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-3 row" hidden>
                                 <label class="col-lg-5" for="ip-voucher-money-min">
                                     Số tiền hàng tối thiểu
                                 </label>
                                 <div class="col-lg-7">
-                                    <input type="number" min="0" class="form-control"
+                                    <input type="number" min="0" class="form-control" value ="1"
                                            id="ip-voucher-money-min"/>
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-3 row" hidden>
                                 <div class="col-lg-5">
                                 </div>
                                 <div class="col-lg-7">
