@@ -16,7 +16,11 @@ import javax.persistence.*;
                         "inner join property_product pp on o.PRODUCT_PROPERTY_ID = pp.ID\n" +
                         "inner join rom r on pp.ROM_ID = r.ID\n" +
                         "inner join color c on pp.COLOR_ID = c.ID\n" +
-                        "inner join product p on r.PRODUCT_ID = p.ID where o.DELETE_FLAG = false and MONTH(o.CREATE_DATE) = :month and YEAR(o.CREATE_DATE) = :year group by o.PRICE ;\n",
+                        "inner join product p on r.PRODUCT_ID = p.ID where o.DELETE_FLAG = false " +
+                        "and If (:month = 'null',  MONTH(o.CREATE_DATE) = MONTH(o.CREATE_DATE), MONTH(o.CREATE_DATE) = :month) " +
+                        "and If (:year = 'null',  YEAR(o.CREATE_DATE) = YEAR(o.CREATE_DATE), YEAR(o.CREATE_DATE) = :year) " +
+                        "and If (:day = 'null',  DAY(o.CREATE_DATE) = DAY(o.CREATE_DATE), DAY(o.CREATE_DATE) = :day) " +
+                        "group by o.PRICE ;\n",
         resultSetMapping = "stock_akhir_dto"
 )
 @SqlResultSetMapping(
