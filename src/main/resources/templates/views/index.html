@@ -199,6 +199,8 @@
                     }
                     if (datas.length > 0) {
                         tong.innerHTML = 'Tổng số tiền bán được : ' + datas[0].total;
+                    } else {
+                        tong.innerHTML = 'Chưa có sản phẩm nào được bán trong thời gian này';
                     }
                 },
                 error: function (error) {
