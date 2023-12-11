@@ -19,9 +19,9 @@ public class ThongKeApi {
     @Autowired
     private ConvertUtil convertUtil;
 
-    @GetMapping("/top-product-sale/{month}/{year}")
-    public List<ThongKeDto> thongKe(@PathVariable("month") Integer month, @PathVariable("year") Integer year){
-        List<ThongKeDto> a =  thongKeRepo.findStockAkhirPerProductIn(month, year);
+    @GetMapping("/top-product-sale/{day}/{month}/{year}")
+    public List<ThongKeDto> thongKe(@PathVariable("day") String day,@PathVariable("month") String month, @PathVariable("year") String year){
+        List<ThongKeDto> a =  thongKeRepo.findStockAkhirPerProductIn(day,month, year);
         Long tong = 0L;
         for (ThongKeDto b : a) {
             if (b.getPriceProduct() != null && b.getQuantityDaBan() != null) {

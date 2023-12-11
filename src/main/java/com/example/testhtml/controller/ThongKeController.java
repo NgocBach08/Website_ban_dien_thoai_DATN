@@ -17,7 +17,7 @@ public class ThongKeController {
     private ThongKeRepo thongKeRepo;
     @GetMapping("/")
     public String index(Model model){
-        List<ThongKeDto> thongKeDtos = thongKeRepo.findStockAkhirPerProductIn(12, 2023);
+        List<ThongKeDto> thongKeDtos = thongKeRepo.findStockAkhirPerProductIn("null","12", "2023");
         model.addAttribute("test", "test");
         return "/views/index";
     }

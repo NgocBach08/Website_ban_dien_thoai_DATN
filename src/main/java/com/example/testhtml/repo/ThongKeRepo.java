@@ -12,8 +12,9 @@ import java.util.List;
 public interface ThongKeRepo extends JpaRepository<OrdersDetailEntity, Long> {
     @Query(name = "thong_ke", nativeQuery = true)
     List<ThongKeDto> findStockAkhirPerProductIn(
-            @Param("month") Integer month,
-            @Param("year") Integer year
+            @Param("day") String day,
+            @Param("month") String month,
+            @Param("year") String year
     );
 }
 

@@ -24,13 +24,27 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 header-title">Thống kê sản phẩm bán chạy trong tháng</h4>
                                     <div class="row mt-3">
-                                        <p style="width: 100px;margin-bottom: 0px;padding-top: 5px">Thời gian: </p>
-                                        <input type="month" class="form-control" style="width: 150px; margin-top: -10px"
+                                        <p style="width: 100px;margin-bottom: 0px;padding-top: 5px">Thời gian theo ngày: </p>
+                                        <input type="date" class="form-control" style="width: 150px; margin-top: -10px"
                                                name="datepicker" id="datepicker"/>
-                                        <button style="width: 110px; margin-left: 20px" class="btn btn-primary"
+                                        <button style="width: 110px; margin-left: 20px; margin-right: 100px" class="btn btn-primary"
+                                                onclick="onLoadTopProductSaleByDay()">Tìm kiếm
+                                        </button>
+
+                                        <p style="width: 100px;margin-bottom: 0px;padding-top: 5px">Thời gian theo tháng: </p>
+                                        <input type="month" class="form-control" style="width: 150px; margin-top: -10px"
+                                               name="datepicker" id="datepicker-month"/>
+                                        <button style="width: 110px; margin-left: 20px; margin-right: 100px" class="btn btn-primary"
                                                 onclick="onLoadTopProductSaleByMonth()">Tìm kiếm
                                         </button>
+                                        <p style="width: 100px;margin-bottom: 0px;padding-top: 5px">Thời gian theo năm: </p>
+                                        <input type="number" min="2010" max="2023" step="1" value="2023" class="form-control" style="width: 150px; margin-top: -10px"
+                                               name="datepicker" id="datepicker-year"/>
+                                        <button style="width: 110px; margin-left: 20px; margin-right: 100px" class="btn btn-primary"
+                                                onclick="onLoadTopProductSaleByYear()">Tìm kiếm
+                                        </button>
                                     </div>
+
 
 
                                     <div class="table-responsive mt-4">
@@ -98,11 +112,25 @@
         getStatisProfit(now.getFullYear())
 
         function onLoadTopProductSaleByMonth() {
-            let monthVal = document.getElementById('datepicker').value;
-            debugger
+            let monthVal = document.getElementById('datepicker-month').value;
             let year = monthVal.substring(0, 4)
             let month = monthVal.substring(monthVal.length - 2, monthVal.length)
-            getTopProductSaleByMonth(month, year)
+            getTopProductSaleByMonth('null',month, year)
+        }
+
+        function onLoadTopProductSaleByYear() {
+            let monthVal = document.getElementById('datepicker-year').value;
+            if (monthVal < 2010 || monthVal > 2023) {
+                toastDanger('Lỗi', "Năm không được nhỏ hơn 2010 và lớn hơn năm hiện tại");
+                return;
+            }
+            getTopProductSaleByMonth('null', 'null', monthVal)
+        }
+
+        function onLoadTopProductSaleByDay() {
+            let monthVal = document.getElementById('datepicker').value;
+            let arr = monthVal.split("-");
+            getTopProductSaleByMonth(arr[0], arr[1], arr[2])
         }
 
         function getStatisProfit(year){
@@ -122,7 +150,6 @@
                         myChart02.data.datasets[0].data.push(profit.profit);
                     }
 
-                    console.log(myChart02.data.datasets[0].data)
                     myChart02.update();
 
                 },
@@ -146,9 +173,9 @@
         window.onload = function() {
             getTopProductSaleByMonth(12, 2022);
         };
-        function getTopProductSaleByMonth(month, year) {
+        function getTopProductSaleByMonth(day, month, year) {
             $.ajax({
-                url: '/top-product-sale/' + month + '/' + year,
+                url: '/top-product-sale/' + day + '/' + month + '/' + year,
                 success: function (datas) {
                     console.log(datas)
                     let topProductSaleByMonth = document.getElementById("topProductSaleByMonth")
@@ -172,6 +199,8 @@
                     }
                     if (datas.length > 0) {
                         tong.innerHTML = 'Tổng số tiền bán được : ' + datas[0].total;
+                    } else {
+                        tong.innerHTML = 'Chưa có sản phẩm nào được bán trong thời gian này';
                     }
                 },
                 error: function (error) {
