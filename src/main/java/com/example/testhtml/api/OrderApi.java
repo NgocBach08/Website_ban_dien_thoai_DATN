@@ -54,9 +54,9 @@ public class OrderApi {
 
     @PostMapping("confirm-order-sale-person")
     public ResponseEntity<?> confirmSaleOrders(@RequestBody OrderRequest request) throws ParseException {
-        DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-        DateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = formatter.parse(request.getDeliveryDate().toString());
+//        DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+//        DateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
+//        Date date = formatter.parse(request.getDeliveryDate().toString());
 
 //        if (convertUtil.strToDate(formatter1.format(formatter.parse(request.getDeliveryDate().toString())), "dd-MM-yyyy").compareTo(new Date()) < 0) {
 //            throw new WorldPhoneExp(ConstansErrorCode.VOUCHER_DATE_NOT_PAST);
