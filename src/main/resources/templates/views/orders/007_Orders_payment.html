@@ -1437,7 +1437,6 @@
                 // when confirming
                 if (status === 'CONFIRM') {
                     $('.modal-info-order').modal('hide');
-
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -1450,21 +1449,14 @@
 
                 // when saving temporal
                 if (status === 'TEMP_SAVE') {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-                    Toast.fire({
+                    Swal.fire({
+                        position: 'center',
                         icon: 'success',
-                        title: "Lưu sản phẩm thành công!"
-                    })
+                        title: 'Lưu sản phẩm thành công',
+                        showConfirmButton: true,
+                        timerProgressBar: true,
+                        timer: 2000
+                    }).then(()=> window.location.reload());
                 }
             },
             error: function (error) {
@@ -1486,21 +1478,14 @@
 
                     // when saving temporal
                     if (status === 'TEMP_SAVE') {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-                        Toast.fire({
+                        Swal.fire({
+                            position: 'center',
                             icon: 'success',
-                            title: "Lưu sản phẩm thành công!"
-                        })
+                            title: 'Lưu sản phẩm thành công',
+                            showConfirmButton: true,
+                            timerProgressBar: true,
+                            timer: 2000
+                        }).then(()=> window.location.reload());
                     }
                 }
             }
@@ -1954,10 +1939,14 @@
                     type: 'GET',
                     contentType: 'application/json',
                     success: function (res) {
-                        Toast.success({
-                            icon: 'info',
-                            title: `Xóa sản phẩm thành công!`
-                        })
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Xoá sản phẩm thành công',
+                            showConfirmButton: true,
+                            timerProgressBar: true,
+                            timer: 2000
+                        }).then(()=> window.location.reload());
                     },
                     error: function (err) {
                         Toast.fire({

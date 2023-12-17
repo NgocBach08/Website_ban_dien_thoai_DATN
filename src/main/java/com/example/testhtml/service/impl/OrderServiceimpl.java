@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -219,15 +220,13 @@ public class OrderServiceimpl implements IOrderService {
     @Override
     public String updateOrder(OrderRequest request) {
         OrdersEntity entity = ordersRepo.findByCodeOrderAndDeleteFlagIsFalse(request.getId());
-        entity.setTotalMoney(Long.valueOf(request.getTotalMoney()));
-        ordersRepo.save(entity);
+        Long tongTien = Long.valueOf(request.getTotalMoney());
         for (OrdersDetailEntity entityDetail : entity.getOrdersDetailEntities()){
             entityDetail.setDeleteFlag(true);
             ordersDetailRepo.save(entityDetail);
         }
         for (OrderDetailRequest detail : request.getDetailRequest()
              ) {
-
             if(detail.getId() != null && !detail.getId().equals("")){
                 String id = detail.getId().replace("orderDetail", "");
                 OrdersDetailEntity detailEntity = ordersDetailRepo.findByDeleteFlagIsTrueAndId(Long.valueOf(id));
@@ -245,7 +244,18 @@ public class OrderServiceimpl implements IOrderService {
                 ordersDetailRepo.save(detailEntity);
             }
         }
-
+        Optional<VoucherEntity> voucherEntity = voucherRepo.findById(String.valueOf(entity.getVoucherID()));
+        if (voucherEntity.isPresent()) {
+            if(voucherEntity != null){
+                if(voucherEntity.get().getTypeDiscount().equals("đ")){
+                    tongTien = tongTien - voucherEntity.get().getDiscount();
+                }else {
+                    tongTien = tongTien - (tongTien / 100 * voucherEntity.get().getDiscount());
+                }
+            }
+        }
+        entity.setTotalMoney(tongTien);
+        ordersRepo.save(entity);
         return "ok";
     }
 
