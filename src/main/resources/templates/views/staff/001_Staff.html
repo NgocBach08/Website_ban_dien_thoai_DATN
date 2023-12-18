@@ -82,9 +82,9 @@
                             </td>
                             <td th:switch="${staff.getStatus()}" class="text-center">
                                 <i class="col-4 fas fa-edit" style="color: darkblue;" title="Cập nhật" onclick="onBtnEdit(this)"></i>
-                                <i th:case="1" class="col-4 fas fa-lock-open" style="color: green;" title="Khoá tài khoản" onclick="onBtnStatus(this)"></i>
-                                <i th:case="0" class="col-4 fas fa-lock" style="color: red;" title="Mở khoá tài khoản" onclick="onBtnStatus(this)"></i>
-                                <i class="col-4 fas fa-user-times" style="color: red;" title="Xoá người dùng" onclick="onBtnDelete(this)"></i>
+<!--                                <i th:case="1" class="col-4 fas fa-lock-open" style="color: green;" title="Khoá tài khoản" onclick="onBtnStatus(this)"></i>-->
+<!--                                <i th:case="0" class="col-4 fas fa-lock" style="color: red;" title="Mở khoá tài khoản" onclick="onBtnStatus(this)"></i>-->
+<!--                                <i class="col-4 fas fa-user-times" style="color: red;" title="Xoá người dùng" onclick="onBtnDelete(this)"></i>-->
                             </td>
                             <td class="text-center">
                                 <img th:src="${staff.getAvatar()}" alt="avatar" class="border rounded" height="50">
