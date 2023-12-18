@@ -78,6 +78,7 @@ public class ProductDetailController {
         model.addAttribute("listRam", ramRespones);
         model.addAttribute("listPin", pinRespones);
         model.addAttribute("listloaios",loaiosRespones);
+        model.addAttribute("test", "test");
         return "/views/product/productdetail";
     }
 

@@ -175,6 +175,7 @@ public class ProductPropertyServiceImpl implements IProductPropertyService {
             return null;
         }else {
             Long imei = imeiRepo.countByPropertyProductId(entity.getId());
+            Long imeiTrenDon = imeiRepo.countByPropertyProductIdTrenDon(entity.getId());
             ProductPropertyRespone dto = new ProductPropertyRespone();
             dto.setColorName(entity.getColorEntity().getValueColor());
             dto.setRomId(String.valueOf(entity.getRomEntity().getId()));
@@ -187,6 +188,7 @@ public class ProductPropertyServiceImpl implements IProductPropertyService {
             dto.setPricePromotion(entity.getPricePromotion());
             dto.setPricePromotionString(convertUtil.moneyToStringFormat(entity.getPricePromotion()));
             dto.setCountImei(imei == null ? 0L : imei);
+            dto.setCountImeiTrenDon(imeiTrenDon == null ? 0L : imeiTrenDon);
             List<ImeiEntity> list = imeiRepo.findByDeleteFlagIsFalseAndPropertyProductId(entity.getId());
             dto.setImeiResponses(list.stream().map(this::mapToImei).collect(Collectors.toList()));
             return dto;

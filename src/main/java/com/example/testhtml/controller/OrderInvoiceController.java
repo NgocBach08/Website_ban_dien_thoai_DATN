@@ -48,6 +48,7 @@ public class OrderInvoiceController {
         model.addAttribute("lstProdoct", productResponseList);
         model.addAttribute("lstInvoiceOrder", lstInvoiceOrder);
         model.addAttribute("lstSupplier", lstSupplier);
+        model.addAttribute("test", "test");
 //        model.addAttribute("lstProduct", lstProduct);
         return "views/invoice-order/datncc";
     }

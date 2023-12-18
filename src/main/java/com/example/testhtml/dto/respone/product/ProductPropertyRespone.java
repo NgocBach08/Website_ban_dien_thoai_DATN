@@ -24,5 +24,6 @@ public class ProductPropertyRespone {
     private String pricePromotionString;
     private long pricePromotion;
     private long countImei;
+    private long countImeiTrenDon;
     private List<ImeiResponse> imeiResponses;
 }

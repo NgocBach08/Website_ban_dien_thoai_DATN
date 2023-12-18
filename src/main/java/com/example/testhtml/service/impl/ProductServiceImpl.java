@@ -164,7 +164,9 @@ public class ProductServiceImpl implements IProductService {
             ) {
                 ProductPropertyRespone productPropertyRespone = new ProductPropertyRespone();
                 Long imei = imeiRepo.countByPropertyProductId(p.getId());
+                Long imeiTrenDon = imeiRepo.countByPropertyProductIdTrenDon(p.getId());
                 productPropertyRespone.setCountImei(imei == null ? 0L : imei);
+                productPropertyRespone.setCountImeiTrenDon(imeiTrenDon == null ? 0L : imeiTrenDon);
                 productPropertyRespone.setQuantity(p.getQuantity());
                 productPropertyRespone.setId(String.valueOf(p.getId()));
                 productPropertyRespone.setRomId(String.valueOf(p.getRomEntity().getId()));
@@ -211,6 +213,7 @@ public class ProductServiceImpl implements IProductService {
                     ) {
                         if(p.getQuantity()  > 0){
                             Long imei = imeiRepo.countByPropertyProductId(p.getId());
+                            Long imeiTrenDon = imeiRepo.countByPropertyProductIdTrenDon(p.getId());
                             ProductPropertyRespone productPropertyRespone = new ProductPropertyRespone();
                             productPropertyRespone.setQuantity(p.getQuantity());
                             productPropertyRespone.setId(String.valueOf(p.getId()));
@@ -221,6 +224,7 @@ public class ProductServiceImpl implements IProductService {
                             List<ImeiEntity> list1 = imeiRepo.findByDeleteFlagIsFalseAndPropertyProductId(p.getId());
                             productPropertyRespone.setImeiResponses(list1.stream().map(this::mapToImei).collect(Collectors.toList()));
                             productPropertyRespone.setCountImei(imei == null ? 0L : imei);
+                            productPropertyRespone.setCountImeiTrenDon(imeiTrenDon == null ? 0L : imeiTrenDon);
                             if(list1.size() > 0){
                                 check = 1;
                                 productPropertyResponeList.add(productPropertyRespone);

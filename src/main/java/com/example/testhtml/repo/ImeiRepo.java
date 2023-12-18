@@ -31,4 +31,7 @@ public interface ImeiRepo extends JpaRepository<ImeiEntity, Long> {
     ImeiEntity findByIdAndDeleteFlagIsFalse(Long id);
 
     List<ImeiEntity> findByOrderDetailIdAndPropertyProductId(Long orderId, Long product);
+
+    @Query("select count(o) from ImeiEntity o where o.deleteFlag = false and o.propertyProductId = ?1 and o.status = '2'")
+    Long countByPropertyProductIdTrenDon(Long id); // count chua ban
 }
