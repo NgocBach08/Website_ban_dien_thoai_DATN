@@ -330,6 +330,14 @@ public class OrderServiceimpl implements IOrderService {
     @Override
     public String doneOrder(String  id) {
         OrdersEntity entity = ordersRepo.findByCodeOrderAndDeleteFlagIsFalse(id);
+        List<OrdersDetailEntity> ordersDetailEntities = entity.getOrdersDetailEntities();
+        if (ordersDetailEntities != null) {
+            for (OrdersDetailEntity a: ordersDetailEntities) {
+                List<ImeiEntity> imeiEntityList = imeiRepo.findByOrder(a.getId());
+                imeiEntityList.forEach(x -> x.setStatus(StatusImei.DA_BAN.getValue()));
+                imeiRepo.saveAll(imeiEntityList);
+            }
+        }
         entity.setStatus(String.valueOf(StatusOrder.HOAN_THANH.getIndex()));
         ordersRepo.save(entity);
         return "ok";
