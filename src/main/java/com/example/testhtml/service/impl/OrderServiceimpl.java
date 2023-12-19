@@ -316,6 +316,14 @@ public class OrderServiceimpl implements IOrderService {
         }
         if(entity.getTypeOrder() == 0){
             entity.setStatus(String.valueOf(StatusOrder.HOAN_THANH.getIndex()));
+            List<OrdersDetailEntity> ordersDetailEntities = entity.getOrdersDetailEntities();
+            if (ordersDetailEntities != null) {
+                for (OrdersDetailEntity a: ordersDetailEntities) {
+                    List<ImeiEntity> imeiEntityList = imeiRepo.findByOrder(a.getId());
+                    imeiEntityList.forEach(x -> x.setStatus(StatusImei.DA_BAN.getValue()));
+                    imeiRepo.saveAll(imeiEntityList);
+                }
+            }
             ordersRepo.save(entity);
             return "ok";
         }
