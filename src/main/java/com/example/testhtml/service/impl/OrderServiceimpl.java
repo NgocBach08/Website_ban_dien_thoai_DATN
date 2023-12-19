@@ -367,8 +367,10 @@ public class OrderServiceimpl implements IOrderService {
         for (OrdersDetailEntity detail : list
         ) {
             ProductPropertyEntity propertyEntity = propertyProductRepo.getById(detail.getIdPropertyProduct());
-            propertyEntity.setQuantity(detail.getQuantity() + propertyEntity.getQuantity());
-            propertyProductRepo.save(propertyEntity);
+            if (!(ordersEntity.getStatus().equals(String.valueOf(StatusOrder.CHO_XAC_NHAN.getIndex())) || ordersEntity.getStatus().equals(String.valueOf(StatusOrder.CHO_XUAT_HANG.getIndex())))) {
+                propertyEntity.setQuantity(detail.getQuantity() + propertyEntity.getQuantity());
+                propertyProductRepo.save(propertyEntity);
+            }
             List<ImeiEntity> imeiEntityList = imeiRepo.findByDeleteFlagIsFalseAndPropertyProductIdAndOrderDetailId(propertyEntity.getId(), detail.getId());
             for (ImeiEntity entity : imeiEntityList) {
                 entity.setStatus(StatusImei.CHUA_BAN.getValue());
