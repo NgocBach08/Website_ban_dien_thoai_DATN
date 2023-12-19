@@ -360,8 +360,6 @@ public class OrderServiceimpl implements IOrderService {
             voucherEntity.setQuantity(voucherEntity.getQuantity() + 1);
             voucherRepo.save(voucherEntity);
         }
-        ordersEntity.setStatus(String.valueOf(StatusOrder.HUY.getIndex()));
-        ordersRepo.save(ordersEntity);
         List<OrdersDetailEntity> list = ordersDetailRepo.findByDeleteFlagIsFalseAndOrdersEntity(ordersEntity);
 
         for (OrdersDetailEntity detail : list
@@ -379,6 +377,8 @@ public class OrderServiceimpl implements IOrderService {
 
             }
         }
+        ordersEntity.setStatus(String.valueOf(StatusOrder.HUY.getIndex()));
+        ordersRepo.save(ordersEntity);
         return "ok";
     }
 }
